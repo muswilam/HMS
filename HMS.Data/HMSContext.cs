@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HMS.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HMS.Data
 {
-    public class HMSContext : DbContext 
+    public class HMSContext : IdentityDbContext<HMSUser>
     {
         public HMSContext()
             : base("HMSConnectionString")
@@ -16,9 +17,15 @@ namespace HMS.Data
 
         }
 
+        public static HMSContext Create()
+        {
+            return new HMSContext();
+        }
+
         public DbSet<AccommodationType> AccommodationTypes { get; set; }
         public DbSet<AccommodationPackage> AccommodationPackages { get; set; }
         public DbSet<Accommodation> Accommodations { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        
     }
 }

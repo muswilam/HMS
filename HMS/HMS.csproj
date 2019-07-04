@@ -167,7 +167,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -238,6 +237,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HMS.Data\HMS.Data.csproj">
+      <Project>{2782e550-14a1-4bd6-a0d6-dc95e91997aa}</Project>
+      <Name>HMS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HMS.Entities\HMS.Entities.csproj">
+      <Project>{96a84c88-654b-4ec1-8eef-7e6134b27990}</Project>
+      <Name>HMS.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
