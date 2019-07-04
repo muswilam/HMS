@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMS", "HMS\HMS.csproj", "{88530138-8ED3-45BD-830F-8BAF18B55616}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMS.Entities", "HMS.Entities\HMS.Entities.csproj", "{96A84C88-654B-4EC1-8EEF-7E6134B27990}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMS.Data", "HMS.Data\HMS.Data.csproj", "{2782E550-14A1-4BD6-A0D6-DC95E91997AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{88530138-8ED3-45BD-830F-8BAF18B55616}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88530138-8ED3-45BD-830F-8BAF18B55616}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88530138-8ED3-45BD-830F-8BAF18B55616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A84C88-654B-4EC1-8EEF-7E6134B27990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A84C88-654B-4EC1-8EEF-7E6134B27990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A84C88-654B-4EC1-8EEF-7E6134B27990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A84C88-654B-4EC1-8EEF-7E6134B27990}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2782E550-14A1-4BD6-A0D6-DC95E91997AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2782E550-14A1-4BD6-A0D6-DC95E91997AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2782E550-14A1-4BD6-A0D6-DC95E91997AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2782E550-14A1-4BD6-A0D6-DC95E91997AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
