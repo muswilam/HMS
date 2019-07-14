@@ -39,7 +39,7 @@
         })
             .done(function (result) {
                 if (result.Success) {
-                    location.reload();
+                    location.href = '@Url.Action("Index","AccommodationTypes")'
                 } else {
                     $(".errorDiv").html(result.Message);
                 }
