@@ -10,19 +10,31 @@ namespace HMS.Services
 {
     public class AccommodationTypesService
     {
+        private HMSContext context;
+        public AccommodationTypesService()
+        {
+            context = new HMSContext();
+        }
+        //get all accommodationTypes from Db
         public IEnumerable<AccommodationType> GetAllAccommodationTypes()
         {
-            var context = new HMSContext();
-
             return context.AccommodationTypes.ToList();
         }
-
-        public bool SaveAccommodationTypes(AccommodationType formModelAccommodationType)
+        //get one accommodationType by id from Db
+        public AccommodationType GetAccommodationTypeById(int id)
         {
-            var context = new HMSContext();
-
-
+            return context.AccommodationTypes.Single(a => a.Id == id);
+        }
+        //save accommodationType to Db
+        public bool SaveAccommodationType(AccommodationType formModelAccommodationType)
+        {
             context.AccommodationTypes.Add(formModelAccommodationType);
+            return context.SaveChanges() > 0;
+        }
+        //edit accommodationType and save it to db
+        public bool UpdateAccommodationType(AccommodationType formModelAccommodationType)
+        {
+            context.Entry(formModelAccommodationType).State = System.Data.Entity.EntityState.Modified;
             return context.SaveChanges() > 0;
         }
     }
