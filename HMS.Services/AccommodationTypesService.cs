@@ -37,5 +37,11 @@ namespace HMS.Services
             context.Entry(formModelAccommodationType).State = System.Data.Entity.EntityState.Modified;
             return context.SaveChanges() > 0;
         }
+
+        public bool DeleteAccommodationType(AccommodationType formModelAccommodationType)
+        {
+            context.Entry(formModelAccommodationType).State = System.Data.Entity.EntityState.Deleted;
+            return context.SaveChanges() > 0;
+        }
     }
 }

@@ -19,7 +19,7 @@
 					<td> @accommodationType.Description</td>
 					<td>
                         <button data-href="@Url.Action("Action", "AccommodationTypes", new { id = accommodationType.Id})" type="button" class="action-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i> Edit</button>
-						<button type="button" class="btn btn-danger"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
+                        <button data-href="@Url.Action("Delete", "AccommodationTypes", new { id = accommodationType.Id})" type="button" class="action-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
 					</td>
 				</tr>
 

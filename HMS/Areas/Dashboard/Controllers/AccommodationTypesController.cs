@@ -80,5 +80,39 @@ namespace HMS.Areas.Dashboard.Controllers
 
             return json;
         }
+
+        //Delete Accommodation Type
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            AccommodationTypesActionModel model = new AccommodationTypesActionModel();
+
+            var accommodation = ATServices.GetAccommodationTypeById(id);
+
+            model.Id = accommodation.Id;
+
+            return PartialView("_Delete", model);
+        }
+
+        [HttpPost]
+        public JsonResult Delete(AccommodationTypesActionModel formModel)
+        {
+            JsonResult json = new JsonResult();
+
+            var accommodationType = ATServices.GetAccommodationTypeById(formModel.Id);
+
+            bool result = ATServices.DeleteAccommodationType(accommodationType);
+
+            if (result)
+            {
+                json.Data = new { Success = true };
+            }
+            else
+            {
+                json.Data = new { Success = false, Message = "Unable to delete this Accommodation Type." };
+            }
+
+            return json;
+        }
     }
 }
