@@ -35,5 +35,13 @@ namespace HMS.Services
             return accommodationPackagesDb.AsEnumerable();
         }
 
+        //add accommodation package to db 
+        public bool AddAccommodationPackage(AccommodationPackage accommodationPackage)
+        {
+            context.AccommodationPackages.Add(accommodationPackage);
+
+            return context.SaveChanges() > 0;
+        }
+
     }
 }
