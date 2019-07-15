@@ -35,11 +35,24 @@ namespace HMS.Services
             return accommodationPackagesDb.AsEnumerable();
         }
 
+        //get accommoodation package by id
+        public AccommodationPackage GetAccommodationPackageById(int id)
+        {
+            return context.AccommodationPackages.Single(ap => ap.Id == id);
+        }
+
         //add accommodation package to db 
         public bool AddAccommodationPackage(AccommodationPackage accommodationPackage)
         {
             context.AccommodationPackages.Add(accommodationPackage);
 
+            return context.SaveChanges() > 0;
+        }
+     
+        //edit accommodation package in db
+        public bool UpdateAccommodationPackage(AccommodationPackage accomodationPackage)
+        {
+            context.Entry(accomodationPackage).State = System.Data.Entity.EntityState.Modified;
             return context.SaveChanges() > 0;
         }
 

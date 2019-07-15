@@ -26,10 +26,20 @@ namespace HMS.Areas.Dashboard.Controllers
 
         // Action control
         [HttpGet]
-        public ActionResult Action()
+        public ActionResult Action(int? id)
         {
             AccommodationPackagesActionModel model = new AccommodationPackagesActionModel();
-            return PartialView("_Action",model);
+
+            if(id.HasValue) // edit
+            {
+                var apFromDB = APServices.GetAccommodationPackageById(id.Value);
+                model.Id = apFromDB.Id;
+                model.Name = apFromDB.Name;
+                model.NoOfRoom = apFromDB.NoOfRoom;
+                model.FeePerNight = apFromDB.FeePerNight;
+            }
+
+            return PartialView("_Action", model);
         }
 
         [HttpPost]
@@ -37,21 +47,37 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             JsonResult json = new JsonResult();
 
-            AccommodationPackage ap = new AccommodationPackage();
+            bool result = false;
 
-            ap.Name = formModel.Name;
-            ap.NoOfRoom = formModel.NoOfRoom;
-            ap.FeePerNight = formModel.FeePerNight;
-            ap.AccommodationTypeId = 13;
+            if (formModel.Id == 0) //create
+            {
+                AccommodationPackage ap = new AccommodationPackage();
 
-            bool result = APServices.AddAccommodationPackage(ap);
+                ap.Name = formModel.Name;
+                ap.NoOfRoom = formModel.NoOfRoom;
+                ap.FeePerNight = formModel.FeePerNight;
+                ap.AccommodationTypeId = 13;
 
+                result = APServices.AddAccommodationPackage(ap);
+            }
+            else
+            {
+                var ap = APServices.GetAccommodationPackageById(formModel.Id);
+
+                ap.Name = formModel.Name;
+                ap.NoOfRoom = formModel.NoOfRoom;
+                ap.FeePerNight = formModel.FeePerNight;
+                ap.AccommodationTypeId = 13;
+
+                result = APServices.UpdateAccommodationPackage(ap);
+            }
+          
             if(result)
             {
                 json.Data = new { Success = true }; 
             }else
             {
-                json.Data = new { Success = false, Message = "Unable to create accommodation package" };
+                json.Data = new { Success = false, Message = "Unable to perform action on accommodation package" };
             }
 
             return json;
