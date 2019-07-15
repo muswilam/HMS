@@ -25,15 +25,15 @@ namespace HMS.Services
         //get accommodation type by search
         public IEnumerable<AccommodationType> GetAccommodationTypesBySearch(string searchTerm)
         {
-            var accommodationTypes = context.AccommodationTypes.AsQueryable();
+            var accommodationTypesDb = context.AccommodationTypes.AsQueryable();
 
             if(!string.IsNullOrEmpty(searchTerm))
             {
                 //note) when use AsQueryable you've to put your result in variable to perform changes on this variable
-                accommodationTypes = accommodationTypes.Where(a => a.Name.ToLower().Contains(searchTerm.ToLower()));
+                accommodationTypesDb = accommodationTypesDb.Where(a => a.Name.ToLower().Contains(searchTerm.ToLower()));
             }
 
-            return accommodationTypes.AsEnumerable();
+            return accommodationTypesDb.AsEnumerable();
         }
 
         //get one accommodationType by id from Db

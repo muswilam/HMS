@@ -1,13 +1,13 @@
-﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationTypesListingModel
+﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationPackagesListingModel
 
 
 @{
-    ViewBag.Title = "Accommodation Type";
+    ViewBag.Title = "Accommodation Packages";
 }
 
 <div class="row">
     <div class="col col-lg-12">
-        <h2>Accommodation Types</h2>
+        <h2>Accommodation Packages</h2>
         <hr />
     </div>
 </div>
@@ -20,8 +20,8 @@
                 <input type="text" name="searchTerm" class="form-control" placeholder="Search." required value="@Model.SearchTerm">
                 <div class="input-group-append" id="button-addon4">
                     <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i> Search</button>
-                    <a class="btn btn-outline-secondary" href="@Url.Action("Index","AccommodationTypes")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
-                    <button data-href="@Url.Action("Action","AccommodationTypes")" class="action-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal"><i class="fas fa-plus mr-1"></i>Create</button>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Index","AccommodationPackages")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
+                    <button data-href="@Url.Action("Action","AccommodationPackages")" class="action-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal"><i class="fas fa-plus mr-1"></i>Create</button>
                 </div>
             </div>
         </form>
@@ -31,7 +31,7 @@
 
 <div class="row">
     <div class="col col-lg-12">
-        @Html.Partial("_Listing",Model)
+        @Html.Partial("_Listing", Model)
 
     </div>
 </div>
@@ -48,9 +48,8 @@
         $(".action-btn").click(function () {
             $.ajax({
                 url: $(this).attr("data-href"),
-            })
-            .done(function (result) {
-                $("#actionModal .modal-dialog").html(result);
+            }).done(function (result) {
+                $("#actionModal .model-dialog").html(result);
             });
         });
     });

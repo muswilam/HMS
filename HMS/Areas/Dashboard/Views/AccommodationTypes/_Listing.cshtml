@@ -1,37 +1,37 @@
-﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationTypesListingModel
+﻿    @model HMS.Areas.Dashboard.ViewModels.AccommodationTypesListingModel
 
 
-@if(Model != null && Model.AccommodationTypes !=null && Model.AccommodationTypes.Count() > 0)
-{
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th scope="col">Name</th>
-				<th scope="col">Description</th>
-				<th scope="col">Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var accommodationType in Model.AccommodationTypes)
-	{
-				<tr>
-					<td> @accommodationType.Name</td>
-					<td> @accommodationType.Description</td>
-					<td>
-                        <button data-href="@Url.Action("Action", "AccommodationTypes", new { id = accommodationType.Id})" type="button" class="action-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i> Edit</button>
-                        <button data-href="@Url.Action("Delete", "AccommodationTypes", new { id = accommodationType.Id})" type="button" class="action-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
-					</td>
-				</tr>
+    @if(Model != null && Model.AccommodationTypes !=null && Model.AccommodationTypes.Count() > 0)
+    {
+	    <table class="table table-striped">
+		    <thead>
+			    <tr>
+				    <th scope="col">Name</th>
+				    <th scope="col">Description</th>
+				    <th scope="col">Action</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    @foreach (var accommodationType in Model.AccommodationTypes)
+	    {
+				    <tr>
+					    <td> @accommodationType.Name</td>
+					    <td> @accommodationType.Description</td>
+					    <td>
+                            <button data-href="@Url.Action("Action", "AccommodationTypes", new { id = accommodationType.Id})" type="button" class="action-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i> Edit</button>
+                            <button data-href="@Url.Action("Delete", "AccommodationTypes", new { id = accommodationType.Id})" type="button" class="action-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
+					    </td>
+				    </tr>
 
-	}
+	    }
 					  
-		</tbody>
-	</table>
+		    </tbody>
+	    </table>
 
-}
-else
-{
-    <div class="alert alert-warning" role="alert">
-            Sorry! No records exist.
-    </div>
-}
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+                Sorry! No records exist.
+        </div>
+    }
