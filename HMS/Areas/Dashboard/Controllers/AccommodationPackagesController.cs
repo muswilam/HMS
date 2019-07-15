@@ -56,7 +56,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 ap.Name = formModel.Name;
                 ap.NoOfRoom = formModel.NoOfRoom;
                 ap.FeePerNight = formModel.FeePerNight;
-                ap.AccommodationTypeId = 13;
+                ap.AccommodationTypeId = 13;  // note , hard coded and will be changed when add dropdownlist 
 
                 result = APServices.AddAccommodationPackage(ap);
             }
@@ -73,12 +73,38 @@ namespace HMS.Areas.Dashboard.Controllers
             }
           
             if(result)
-            {
-                json.Data = new { Success = true }; 
-            }else
-            {
-                json.Data = new { Success = false, Message = "Unable to perform action on accommodation package" };
-            }
+                json.Data = new { success = true }; 
+            else
+                json.Data = new { success = false, message = "Unable to perform action on accommodation package" };
+
+            return json;
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            AccommodationPackagesActionModel model = new AccommodationPackagesActionModel();
+
+            var apFromDB = APServices.GetAccommodationPackageById(id);
+
+            model.Id = apFromDB.Id;
+            model.Name = apFromDB.Name;
+
+            return PartialView("_Delete",model);
+        }
+
+        public JsonResult Delete(AccommodationPackagesActionModel formModel)
+        {
+            JsonResult json = new JsonResult();
+
+            var apFromDb = APServices.GetAccommodationPackageById(formModel.Id);
+
+            bool result = APServices.DeleteAccommodationPackage(apFromDb);
+
+            if(result)
+                json.Data = new { success = true };
+            else
+                json.Data = new { success = false, message = "Unable to delete this accommodation package" };
 
             return json;
         }

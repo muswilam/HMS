@@ -67,13 +67,9 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             
             if(result)
-            {
-                json.Data = new { Success = true };
-            }
+                json.Data = new { success = true };
             else
-            {
-                json.Data = new { Success = false, Message = "Unable to perform action on Accommodation Type." };
-            }
+                json.Data = new { success = false, message = "Unable to perform action on Accommodation Type." };
 
             return json;
         }
@@ -87,6 +83,7 @@ namespace HMS.Areas.Dashboard.Controllers
             var accommodation = ATServices.GetAccommodationTypeById(id);
 
             model.Id = accommodation.Id;
+            model.Name = accommodation.Name;
 
             return PartialView("_Delete", model);
         }
@@ -101,13 +98,9 @@ namespace HMS.Areas.Dashboard.Controllers
             bool result = ATServices.DeleteAccommodationType(accommodationType);
 
             if (result)
-            {
-                json.Data = new { Success = true };
-            }
+                json.Data = new { success = true };
             else
-            {
-                json.Data = new { Success = false, Message = "Unable to delete this Accommodation Type." };
-            }
+                json.Data = new { success = false, message = "Unable to delete this Accommodation Type." };
 
             return json;
         }

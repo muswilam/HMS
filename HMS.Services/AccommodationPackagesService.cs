@@ -56,5 +56,11 @@ namespace HMS.Services
             return context.SaveChanges() > 0;
         }
 
+        //delete accommodation package by id from db
+        public bool DeleteAccommodationPackage(AccommodationPackage accommodationPackage)
+        {
+            context.Entry(accommodationPackage).State = System.Data.Entity.EntityState.Deleted;
+            return context.SaveChanges() > 0;
+        }
     }
 }

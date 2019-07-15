@@ -1,14 +1,11 @@
-﻿
-@model HMS.Areas.Dashboard.ViewModels.AccommodationTypesActionModel
-
+﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationPackagesActionModel
 
 @if (Model != null)
 {
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">
-                <span>Delete Accommodation Type</span>
-            </h5>
+            <h5 class="modal-title"> Delete Accommodation Package </h5>
+
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -18,31 +15,32 @@
                 <input type="hidden" name="id" value="@Model.Id" />
             </form>
             <div class="alert alert-danger" role="alert">
-                Are you sure ? You wanna delete @Model.Name 
+                Are you sure ? you wanna delete @Model.Name
             </div>
             <div class="errorDiv"></div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
-            <button id="deleteButton" type="button" class="btn btn-danger"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
+            <button id="saveActionBtn" type="button" class="btn btn-danger"> <i class="fas fa-trash-alt mr-1"></i>Delete</button>
         </div>
     </div>
 }
 
 
-<script>
-    $("#deleteButton").click(function () {
+<script>    
+    $("#saveActionBtn").click(function () {
         $.ajax({
-            url: '@Url.Action("Delete","AccommodationTypes")',
+            url: '@Url.Action("Delete","AccommodationPackages")',
             type: 'Post',
             data: $("#actionForm").serialize()
         })
-            .done(function (result) {
-                if (result.success) {
-                    location.href = '@Url.Action("Index","AccommodationTypes")'
-                } else {
-                    $(".errorDiv").html(result.message);
-                }
-            });
+        .done(function (result) {
+            if (result.success) {
+                location.href ='@Url.Action("Index","AccommodationPackages")'
+            } else {
+                $("#errorDiv").html(result.message);
+            }
+        });
     });
+
 </script>

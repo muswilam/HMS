@@ -50,10 +50,10 @@
             data: $("#actionForm").serialize()
         })
             .done(function (result) {
-                if (result.Success) {
+                if (result.success) {
                     location.reload();
                 } else {
-                    $(".errorDiv").html(result.Message);
+                    $(".errorDiv").html(result.message);
                 }
             });
     });
