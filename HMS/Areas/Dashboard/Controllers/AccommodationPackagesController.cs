@@ -12,6 +12,7 @@ namespace HMS.Areas.Dashboard.Controllers
     public class AccommodationPackagesController : Controller
     {
         AccommodationPackagesService APServices = new AccommodationPackagesService();
+        AccommodationTypesService ATServices = new AccommodationTypesService();
         // GET: Dashboard/AccommodationPackages
         public ActionResult Index(string searchTerm)
         {
@@ -24,7 +25,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return View(model);
         }
 
-        // Action control
+        // Action 
         [HttpGet]
         public ActionResult Action(int? id)
         {
@@ -37,7 +38,10 @@ namespace HMS.Areas.Dashboard.Controllers
                 model.Name = apFromDB.Name;
                 model.NoOfRoom = apFromDB.NoOfRoom;
                 model.FeePerNight = apFromDB.FeePerNight;
+                model.AccommodationTypeId = apFromDB.AccommodationTypeId;
             }
+
+            model.AccommodationTypes = ATServices.GetAllAccommodationTypes();
 
             return PartialView("_Action", model);
         }
@@ -56,7 +60,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 ap.Name = formModel.Name;
                 ap.NoOfRoom = formModel.NoOfRoom;
                 ap.FeePerNight = formModel.FeePerNight;
-                ap.AccommodationTypeId = 13;  // note , hard coded and will be changed when add dropdownlist 
+                ap.AccommodationTypeId = formModel.AccommodationTypeId;
 
                 result = APServices.AddAccommodationPackage(ap);
             }
@@ -67,7 +71,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 ap.Name = formModel.Name;
                 ap.NoOfRoom = formModel.NoOfRoom;
                 ap.FeePerNight = formModel.FeePerNight;
-                ap.AccommodationTypeId = 13;
+                ap.AccommodationTypeId = formModel.AccommodationTypeId;
 
                 result = APServices.UpdateAccommodationPackage(ap);
             }
@@ -80,6 +84,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return json;
         }
 
+        // Delete 
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -93,6 +98,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return PartialView("_Delete",model);
         }
 
+        [HttpPost]
         public JsonResult Delete(AccommodationPackagesActionModel formModel)
         {
             JsonResult json = new JsonResult();

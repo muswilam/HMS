@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HMS.Entities;
 using HMS.Data;
+using System.Data.Entity;
 
 namespace HMS.Services
 {
@@ -25,7 +26,7 @@ namespace HMS.Services
         //get accommodation packages by search
         public IEnumerable<AccommodationPackage> GetAccommodationPackagesBySearch(string searchTerm)
         {
-            var accommodationPackagesDb = context.AccommodationPackages.AsQueryable();
+            var accommodationPackagesDb = context.AccommodationPackages.Include(a => a.AccommodationType).AsQueryable();
 
             if(!string.IsNullOrEmpty(searchTerm))
             {
@@ -45,7 +46,6 @@ namespace HMS.Services
         public bool AddAccommodationPackage(AccommodationPackage accommodationPackage)
         {
             context.AccommodationPackages.Add(accommodationPackage);
-
             return context.SaveChanges() > 0;
         }
      
