@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using HMS.Entities;
+using HMS.ViewModels;
 
 namespace HMS.Areas.Dashboard.ViewModels
 {
@@ -13,6 +14,8 @@ namespace HMS.Areas.Dashboard.ViewModels
 
         public string SearchByName { get; set; }
         public int? SearchByAccommodationTypeId { get; set; }
+
+        public Pager Pager { get; set; }
     }
 
     public class AccommodationPackagesActionModel

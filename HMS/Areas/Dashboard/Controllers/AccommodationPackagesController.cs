@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using HMS.Services;
 using HMS.Areas.Dashboard.ViewModels;
 using HMS.Entities;
+using HMS.ViewModels;
 
 namespace HMS.Areas.Dashboard.Controllers
 {
@@ -15,16 +16,23 @@ namespace HMS.Areas.Dashboard.Controllers
         AccommodationTypesService ATServices = new AccommodationTypesService();
 
         // GET: Dashboard/AccommodationPackages
-        public ActionResult Index(string searchTerm , int? accommodationTypeId)
+        public ActionResult Index(string searchTerm , int? accommodationTypeId , int? page)
         {
+            int recordSize = 5;
+            page = page ?? 1;
+
             AccommodationPackagesListingModel model = new AccommodationPackagesListingModel();
 
             model.SearchByName = searchTerm;
             model.SearchByAccommodationTypeId = accommodationTypeId;
 
-            model.AccommodationPackages = APServices.GetAccommodationPackagesBySearch(searchTerm , accommodationTypeId);
+            model.AccommodationPackages = APServices.GetAccommodationPackagesBySearch(searchTerm , accommodationTypeId , page.Value , recordSize);
 
             model.AccommodationTypes = ATServices.GetAllAccommodationTypes();
+
+            var totalRecords = APServices.GetAccommodationPackagesCount(searchTerm,accommodationTypeId);
+
+            model.Pager = new Pager(totalRecords, page, recordSize);
 
             return View(model);
         }

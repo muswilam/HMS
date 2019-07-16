@@ -24,7 +24,7 @@ namespace HMS.Services
         }
 
         //get accommodation packages by search name or by accoommodation type 
-        public IEnumerable<AccommodationPackage> GetAccommodationPackagesBySearch(string searchTerm , int? accommoddationTypeId)
+        public IEnumerable<AccommodationPackage> GetAccommodationPackagesBySearch(string searchTerm , int? accommoddationTypeId , int page , int recordSize )
         {
             var accommodationPackagesDb = context.AccommodationPackages.Include(a => a.AccommodationType).AsQueryable();
 
@@ -37,7 +37,27 @@ namespace HMS.Services
                 accommodationPackagesDb = accommodationPackagesDb.Where(ap => ap.AccommodationTypeId == accommoddationTypeId.Value);
             }
 
-            return accommodationPackagesDb.AsEnumerable();
+            // skip = (1-1) * 3 = 0
+            var skip = (page -1) * recordSize;
+
+            return accommodationPackagesDb.OrderBy(ap => ap.AccommodationTypeId).Skip(skip).Take(recordSize).ToList();
+        }
+
+        //get Number of total reecords 
+        public int GetAccommodationPackagesCount(string searchTerm, int? accommoddationTypeId)
+        {
+            var accommodationPackagesDb = context.AccommodationPackages.Include(a => a.AccommodationType).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                accommodationPackagesDb = accommodationPackagesDb.Where(ap => ap.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+            if (accommoddationTypeId.HasValue && accommoddationTypeId > 0)
+            {
+                accommodationPackagesDb = accommodationPackagesDb.Where(ap => ap.AccommodationTypeId == accommoddationTypeId.Value);
+            }
+
+            return accommodationPackagesDb.Count();
         }
 
         //get accommoodation package by id
