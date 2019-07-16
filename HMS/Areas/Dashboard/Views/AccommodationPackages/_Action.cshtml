@@ -40,6 +40,10 @@
                     <select class="form-control" name="accommodationTypeId" required>
                         @if (Model.AccommodationTypes != null)
                         {
+                            <option value="0" selected>
+                                Select type.
+                            </option>
+
                             foreach (var accommodationType in Model.AccommodationTypes)
                             {
                                 <option value="@accommodationType.Id" @(accommodationType.Id == Model.AccommodationTypeId ? "selected" : string.Empty)>

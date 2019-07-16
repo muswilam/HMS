@@ -23,14 +23,18 @@ namespace HMS.Services
             return context.AccommodationPackages.ToList();
         }
 
-        //get accommodation packages by search
-        public IEnumerable<AccommodationPackage> GetAccommodationPackagesBySearch(string searchTerm)
+        //get accommodation packages by search name or by accoommodation type 
+        public IEnumerable<AccommodationPackage> GetAccommodationPackagesBySearch(string searchTerm , int? accommoddationTypeId)
         {
             var accommodationPackagesDb = context.AccommodationPackages.Include(a => a.AccommodationType).AsQueryable();
 
             if(!string.IsNullOrEmpty(searchTerm))
             {
-                accommodationPackagesDb = accommodationPackagesDb.Where(ap => ap.Name.ToLower().Contains(searchTerm.ToLower()));
+                accommodationPackagesDb = accommodationPackagesDb.Where( ap => ap.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+            if(accommoddationTypeId.HasValue && accommoddationTypeId > 0)
+            {
+                accommodationPackagesDb = accommodationPackagesDb.Where(ap => ap.AccommodationTypeId == accommoddationTypeId.Value);
             }
 
             return accommodationPackagesDb.AsEnumerable();

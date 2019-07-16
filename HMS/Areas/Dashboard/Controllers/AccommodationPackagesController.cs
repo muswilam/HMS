@@ -13,19 +13,23 @@ namespace HMS.Areas.Dashboard.Controllers
     {
         AccommodationPackagesService APServices = new AccommodationPackagesService();
         AccommodationTypesService ATServices = new AccommodationTypesService();
+
         // GET: Dashboard/AccommodationPackages
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string searchTerm , int? accommodationTypeId)
         {
             AccommodationPackagesListingModel model = new AccommodationPackagesListingModel();
 
-            model.SearchTerm = searchTerm;
+            model.SearchByName = searchTerm;
+            model.SearchByAccommodationTypeId = accommodationTypeId;
 
-            model.AccommodationPackages = APServices.GetAccommodationPackagesBySearch(searchTerm);
+            model.AccommodationPackages = APServices.GetAccommodationPackagesBySearch(searchTerm , accommodationTypeId);
+
+            model.AccommodationTypes = ATServices.GetAllAccommodationTypes();
 
             return View(model);
         }
 
-        // Action 
+        // Create and Edite (Get view) 
         [HttpGet]
         public ActionResult Action(int? id)
         {
@@ -46,6 +50,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return PartialView("_Action", model);
         }
 
+        // Create and Edite (Post view)
         [HttpPost]
         public JsonResult Action(AccommodationPackagesActionModel formModel)
         {
