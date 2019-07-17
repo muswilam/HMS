@@ -230,6 +230,7 @@
     <Content Include="Areas\Dashboard\Views\AccommodationPackages\_Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\Accommodations\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Accommodations\_Listing.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Accommodations\_Action.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

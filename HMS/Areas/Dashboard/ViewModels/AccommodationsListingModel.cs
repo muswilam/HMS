@@ -11,5 +11,18 @@ namespace HMS.Areas.Dashboard.ViewModels
         public IEnumerable<Accommodation> Accommodations { get; set; }
 
         public string SearchByName { get; set; }
+
+    }
+
+    public class AccommodationsActionModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public IEnumerable<AccommodationPackage> AccommodationPackages { get; set; }
+
+        public int AccommodationPackageId { get; set; }
+        public AccommodationPackage AccommodationPackage { get; set; }
     }
 }

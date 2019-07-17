@@ -1,0 +1,107 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationsActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                 Create Accommodation Package
+            </h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" name="name" placeholder="Enter Accommodation Type name." value="@Model.Name">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" name="description" placeholder="Enter Accommodation Type Description.">@Model.Description</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Accommodation Package</label>
+                    <select class="form-control" name="accommodationPackageId" required>
+                        @if (Model.AccommodationPackages != null)
+                        {
+                            <option value="0">
+                                Select Package.
+                            </option>
+                            foreach (var ap in Model.AccommodationPackages)
+                            {
+                                <option value="@ap.Id">
+                                    @ap.Name
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                @*<div class="form-group">
+                    <label>Accommodation Type</label>
+
+                    <select class="form-control" name="accommodationTypeId" required>
+                        @if (Model.AccommodationTypes != null)
+                        {
+                            <option value="0" selected>
+                                Select type.
+                            </option>
+
+                            foreach (var accommodationType in Model.AccommodationTypes)
+                            {
+                                <option value="@accommodationType.Id" @(accommodationType.Id == Model.AccommodationTypeId ? "selected" : string.Empty)>
+                                    @accommodationType.Name
+                                </option>
+                            }
+                        }
+                    </select>
+
+                </div>*@
+            </form>
+            <div class="errorDiv"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
+            <button id="saveActionBtn" type="button" class="btn btn-primary"> <i class="fas fa-save mr-1"></i>Save</button>
+        </div>
+    </div>
+
+}
+
+<script>
+    $("#saveActionBtn").click(function () {
+        $.ajax({
+            url: '@Url.Action("Action","Accommodations")',
+            type: 'Post',
+            data: $("#actionForm").serialize()
+        })
+        .done(function (result) {
+            if (result.success) {
+                location.reload();
+            } else {
+                $("#errorDiv").html(result.message);
+            }
+        })
+    });
+
+</script>
+
+@*<script>
+    $("#saveActionBtn").click(function () {
+        $.ajax({
+            url: '@Url.Action("Action", "AccommodationPackages")',
+            type: 'Post',
+            data: $("#actionForm").serialize()
+        })
+        .done(function (result) {
+            if (result.success) {
+                location.reload();
+            } else {
+                $("#errorDiv").html(result.message);
+            }
+        });
+    });
+</script>*@

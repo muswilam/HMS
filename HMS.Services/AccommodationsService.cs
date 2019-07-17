@@ -36,6 +36,14 @@ namespace HMS.Services
 
             return accommodationsDb.ToList();
         }
+
+        //add accommodation to db 
+        public bool SaveAccommodation(Accommodation accommodation)
+        {
+            context.Accommodations.Add(accommodation);
+
+            return context.SaveChanges() > 0;
+        }
         
     }
 }
