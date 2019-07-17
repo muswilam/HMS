@@ -32,7 +32,7 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             AccommodationsActionModel model = new AccommodationsActionModel();
 
-            if(id != 0) // edit
+            if(id > 0) // edit
             {
                 var accommodation = AServices.GetAccommodationById(id.Value);
 
@@ -52,7 +52,6 @@ namespace HMS.Areas.Dashboard.Controllers
         [HttpPost]
         public JsonResult Action(AccommodationsActionModel formModel)
         {
-            JsonResult json = new JsonResult();
             bool result = false;
 
             if(formModel.Id == 0) //create
@@ -77,12 +76,43 @@ namespace HMS.Areas.Dashboard.Controllers
 
                 result = AServices.UpdateAccommodation(accommodation);
             }
+            return Result(result); 
+        }
 
+        // delete (get)
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            AccommodationsActionModel model = new AccommodationsActionModel();
 
-            if (result)
+            var accommodation = AServices.GetAccommodationById(id);
+
+            model.Id = accommodation.Id;
+            model.Name = accommodation.Name;
+
+            return PartialView("_Delete",model);
+        }
+
+        // delete (post)
+        public JsonResult Delete(AccommodationsActionModel formModel)
+        {
+            bool result = false;
+
+            var accommodation = AServices.GetAccommodationById(formModel.Id);
+
+            result = AServices.DeleteAccommodation(accommodation);
+            
+            return Result(result);
+        }
+
+        public JsonResult Result(bool resultMethod)
+        {
+            JsonResult json = new JsonResult();
+
+            if (resultMethod)
                 json.Data = new { success = true };
             else
-                json.Data = new { success = false, message = "Unable to create this accommodation" };
+                json.Data = new { success = false, message = "OOPS! Something went wrong" };
 
             return json;
         }

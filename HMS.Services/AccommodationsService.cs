@@ -58,6 +58,14 @@ namespace HMS.Services
 
             return context.SaveChanges() > 0;
         }
+
+        //delete accommodation from db 
+        public bool DeleteAccommodation(Accommodation accommodation)
+        {
+            context.Entry(accommodation).State = EntityState.Deleted;
+
+            return context.SaveChanges() > 0;
+        }
         
     }
 }

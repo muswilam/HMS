@@ -5,7 +5,15 @@
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">
-                 Create Accommodation Package
+                @if (Model.Id == 0)
+                {
+                    <text> Create Accommodation Package </text>
+                }
+                else
+                {
+
+                    <text> Edit Accommodation Package </text>
+                }
             </h5>
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
