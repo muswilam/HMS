@@ -16,6 +16,7 @@ namespace HMS.Services
         public AccommodationsService()
         {
             context = new HMSContext();
+            var accommodationsDb = context.Accommodations.Include(a => a.AccommodationPackage).AsQueryable();
         }
 
         //get list of accommodations
@@ -25,7 +26,7 @@ namespace HMS.Services
         }
 
         //get list of accommodaation by search for name or by accommodation package
-        public IEnumerable<Accommodation> GetAccommodationsBySearchOrPackageId(string searchTerm , int? accommodationPackageId)
+        public IEnumerable<Accommodation> GetAccommodationsBySearchOrPackageId(string searchTerm , int? accommodationPackageId, int page , int pageSize)
         {
             var accommodationsDb = context.Accommodations.Include(a => a.AccommodationPackage).AsQueryable();
 
@@ -33,11 +34,31 @@ namespace HMS.Services
             {
                 accommodationsDb = accommodationsDb.Where(a => a.Name.ToLower().Contains(searchTerm.ToLower()));
             }
-            if(accommodationPackageId.HasValue)
+            if(accommodationPackageId.HasValue && accommodationPackageId.Value > 0)
             {
                 accommodationsDb = accommodationsDb.Where(a => a.AccommodationPackageId == accommodationPackageId.Value);
             }
-            return accommodationsDb.ToList();
+
+            var skip = (page - 1) * pageSize;
+
+            return accommodationsDb.OrderBy(a => a.AccommodationPackageId).Skip(skip).Take(pageSize).ToList();
+        }
+
+        //get total number of records
+        public int GetAllAccommodationsCount(string searchTerm, int? accommodationPackageId) 
+        {
+            var accommodationsDb = context.Accommodations.Include(a => a.AccommodationPackage).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                accommodationsDb = accommodationsDb.Where(a => a.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+            if (accommodationPackageId.HasValue && accommodationPackageId.Value > 0)
+            {
+                accommodationsDb = accommodationsDb.Where(a => a.AccommodationPackageId == accommodationPackageId.Value);
+            }
+            
+            return accommodationsDb.Count();
         }
 
         //get accommdation by id

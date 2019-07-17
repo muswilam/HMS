@@ -28,29 +28,29 @@
         </tbody>
     </table>
 
-    @*if (Model.Pager.EndPage > 1)
+    if (Model.Pager.EndPage > 1)
     {
         <nav>
             <ul class="pagination">
                 @if (Model.Pager.CurrentPage > 1)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="@Url.Action("Index", "AccommodationPackages",
+                        <a class="page-link" href="@Url.Action("Index", "Accommodations",
                         new
                         {
                             searchTerm = Model.SearchByName,
-                            accommodationTypeId = Model.SearchByAccommodationTypeId
+                            accommodationPackageId = Model.SearchByAccommodationPackageId
                         })">
                             <i class="fas fa-angle-double-left"></i>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="@Url.Action("Index", "AccommodationPackages",
+                        <a class="page-link" href="@Url.Action("Index", "Accommodations",
                         new
                         {
                             page = Model.Pager.CurrentPage - 1,
                             searchTerm = Model.SearchByName,
-                            accommodationTypeId = Model.SearchByAccommodationTypeId
+                            accommodationPackageId = Model.SearchByAccommodationPackageId
                         })">
                             <i class="fas fa-angle-left"></i>
                         </a>
@@ -60,12 +60,12 @@
                 @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
                 {
                     <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
-                        <a class="page-link" href="@Url.Action("Index", "AccommodationPackages",
+                        <a class="page-link" href="@Url.Action("Index", "Accommodations",
                         new
                         {
                             page = page,
                             searchTerm = Model.SearchByName,
-                            accommodationTypeId = Model.SearchByAccommodationTypeId
+                            accommodationPackageId = Model.SearchByAccommodationPackageId
                         })">@page</a>
                     </li>
                 }
@@ -73,22 +73,23 @@
                 @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="@Url.Action("Index", "AccommodationPackages",
-                            new
-                            {
-                                page = Model.Pager.CurrentPage + 1,
-                                searchTerm = Model.SearchByName,
-                                accommodationTypeId = Model.SearchByAccommodationTypeId
-                            })">
+                        <a class="page-link" href="@Url.Action("Index", "Accommodations",
+                        new
+                        {
+                            page = Model.Pager.CurrentPage + 1,
+                            searchTerm = Model.SearchByName,
+                            accommodationPackageId = Model.SearchByAccommodationPackageId
+                        })">
                             <i class="fas fa-angle-right"></i>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="@Url.Action("Index", "AccommodationPackages",
-                        new {
+                        <a class="page-link" href="@Url.Action("Index", "Accommodations",
+                        new 
+                        {
                             page = Model.Pager.TotalPages,
                             searchTerm = Model.SearchByName,
-                            accommodationTypeId = Model.SearchByAccommodationTypeId
+                            accommodationPackageId = Model.SearchByAccommodationPackageId
                         })">
                             <i class="fas fa-angle-double-right"></i>
                         </a>
@@ -96,7 +97,7 @@
                 }
             </ul>
         </nav>
-    }*@
+    }
 
 }
 else
