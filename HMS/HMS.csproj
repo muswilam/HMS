@@ -160,6 +160,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Dashboard\Common\JsonDataResult.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccommodationPackagesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccommodationsController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccommodationTypesController.cs" />

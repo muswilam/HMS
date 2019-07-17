@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using HMS.Areas.Dashboard.ViewModels;
 using HMS.Services;
 using HMS.Entities;
+using HMS.Areas.Dashboard.Common;
 
 namespace HMS.Areas.Dashboard.Controllers
 {
@@ -44,7 +45,6 @@ namespace HMS.Areas.Dashboard.Controllers
         [HttpPost]
         public JsonResult Action(AccommodationTypesActionModel formModel)
         {
-            JsonResult json = new JsonResult();
             bool result = false;
 
             if(formModel.Id > 0) //edit record
@@ -65,13 +65,8 @@ namespace HMS.Areas.Dashboard.Controllers
 
                 result = ATServices.SaveAccommodationType(accommodationType);
             }
-            
-            if(result)
-                json.Data = new { success = true };
-            else
-                json.Data = new { success = false, message = "Unable to perform action on Accommodation Type." };
 
-            return json;
+            return JsonDataResult.Result(result);
         }
 
         //Delete Accommodation Type
@@ -91,18 +86,11 @@ namespace HMS.Areas.Dashboard.Controllers
         [HttpPost]
         public JsonResult Delete(AccommodationTypesActionModel formModel)
         {
-            JsonResult json = new JsonResult();
-
             var accommodationType = ATServices.GetAccommodationTypeById(formModel.Id);
 
             bool result = ATServices.DeleteAccommodationType(accommodationType);
 
-            if (result)
-                json.Data = new { success = true };
-            else
-                json.Data = new { success = false, message = "Unable to delete this Accommodation Type." };
-
-            return json;
+            return JsonDataResult.Result(result);
         }
     }
 }

@@ -7,6 +7,7 @@ using HMS.Services;
 using HMS.Areas.Dashboard.ViewModels;
 using HMS.Entities;
 using HMS.ViewModels;
+using HMS.Areas.Dashboard.Common;
 
 namespace HMS.Areas.Dashboard.Controllers
 {
@@ -62,8 +63,6 @@ namespace HMS.Areas.Dashboard.Controllers
         [HttpPost]
         public JsonResult Action(AccommodationPackagesActionModel formModel)
         {
-            JsonResult json = new JsonResult();
-
             bool result = false;
 
             if (formModel.Id == 0) //create
@@ -88,13 +87,8 @@ namespace HMS.Areas.Dashboard.Controllers
 
                 result = APServices.UpdateAccommodationPackage(ap);
             }
-          
-            if(result)
-                json.Data = new { success = true }; 
-            else
-                json.Data = new { success = false, message = "Unable to perform action on accommodation package" };
 
-            return json;
+            return JsonDataResult.Result(result);
         }
 
         // Delete 
@@ -114,18 +108,11 @@ namespace HMS.Areas.Dashboard.Controllers
         [HttpPost]
         public JsonResult Delete(AccommodationPackagesActionModel formModel)
         {
-            JsonResult json = new JsonResult();
-
             var apFromDb = APServices.GetAccommodationPackageById(formModel.Id);
 
             bool result = APServices.DeleteAccommodationPackage(apFromDb);
 
-            if(result)
-                json.Data = new { success = true };
-            else
-                json.Data = new { success = false, message = "Unable to delete this accommodation package" };
-
-            return json;
+            return JsonDataResult.Result(result);
         }
     }
 }

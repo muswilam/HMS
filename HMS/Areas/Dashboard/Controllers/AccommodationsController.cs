@@ -7,6 +7,7 @@ using HMS.Services;
 using HMS.Areas.Dashboard.ViewModels;
 using HMS.Entities;
 using HMS.ViewModels;
+using HMS.Areas.Dashboard.Common;
 
 namespace HMS.Areas.Dashboard.Controllers
 {
@@ -85,7 +86,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
                 result = AServices.UpdateAccommodation(accommodation);
             }
-            return Result(result); 
+            return JsonDataResult.Result(result); 
         }
 
         // delete (get)
@@ -105,26 +106,13 @@ namespace HMS.Areas.Dashboard.Controllers
         // delete (post)
         public JsonResult Delete(AccommodationsActionModel formModel)
         {
-            bool result = false;
-
             var accommodation = AServices.GetAccommodationById(formModel.Id);
 
-            result = AServices.DeleteAccommodation(accommodation);
+            bool result = AServices.DeleteAccommodation(accommodation);
             
-            return Result(result);
+            return JsonDataResult.Result(result);
         }
 
-        // json data
-        public JsonResult Result(bool resultMethod)
-        {
-            JsonResult json = new JsonResult();
-
-            if (resultMethod)
-                json.Data = new { success = true };
-            else
-                json.Data = new { success = false, message = "OOPS! Something went wrong" };
-
-            return json;
-        }
+        
     }
 }
