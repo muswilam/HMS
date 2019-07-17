@@ -37,10 +37,24 @@ namespace HMS.Services
             return accommodationsDb.ToList();
         }
 
+        //get accommdation by id
+        public Accommodation GetAccommodationById(int id)
+        {
+            return context.Accommodations.Single(a => a.Id == id);
+        }
+
         //add accommodation to db 
         public bool SaveAccommodation(Accommodation accommodation)
         {
             context.Accommodations.Add(accommodation);
+
+            return context.SaveChanges() > 0;
+        }
+
+        //edit accommodation in db 
+        public bool UpdateAccommodation(Accommodation accommodation)
+        {
+            context.Entry(accommodation).State = EntityState.Modified;
 
             return context.SaveChanges() > 0;
         }

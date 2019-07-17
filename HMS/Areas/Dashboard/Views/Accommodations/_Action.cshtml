@@ -33,7 +33,7 @@
                             </option>
                             foreach (var ap in Model.AccommodationPackages)
                             {
-                                <option value="@ap.Id">
+                                <option value="@ap.Id" @(ap.Id == Model.AccommodationPackageId ? "selected" : string.Empty)>
                                     @ap.Name
                                 </option>
                             }
@@ -88,20 +88,3 @@
     });
 
 </script>
-
-@*<script>
-    $("#saveActionBtn").click(function () {
-        $.ajax({
-            url: '@Url.Action("Action", "AccommodationPackages")',
-            type: 'Post',
-            data: $("#actionForm").serialize()
-        })
-        .done(function (result) {
-            if (result.success) {
-                location.reload();
-            } else {
-                $("#errorDiv").html(result.message);
-            }
-        });
-    });
-</script>*@
