@@ -9,8 +9,10 @@ namespace HMS.Areas.Dashboard.ViewModels
     public class AccommodationsListingModel
     {
         public IEnumerable<Accommodation> Accommodations { get; set; }
+        public IEnumerable<AccommodationPackage> AccommodationPackages { get; set; }
 
         public string SearchByName { get; set; }
+        public int? SearchByAccommodationPackageId { get; set; }
 
     }
 

@@ -24,8 +24,8 @@ namespace HMS.Services
             return context.Accommodations.Include(a => a.AccommodationPackage).ToList();
         }
 
-        //get list of accommodaation by search 
-        public IEnumerable<Accommodation> GetAccommodationsBySearch(string searchTerm)
+        //get list of accommodaation by search for name or by accommodation package
+        public IEnumerable<Accommodation> GetAccommodationsBySearchOrPackageId(string searchTerm , int? accommodationPackageId)
         {
             var accommodationsDb = context.Accommodations.Include(a => a.AccommodationPackage).AsQueryable();
 
@@ -33,7 +33,10 @@ namespace HMS.Services
             {
                 accommodationsDb = accommodationsDb.Where(a => a.Name.ToLower().Contains(searchTerm.ToLower()));
             }
-
+            if(accommodationPackageId.HasValue)
+            {
+                accommodationsDb = accommodationsDb.Where(a => a.AccommodationPackageId == accommodationPackageId.Value);
+            }
             return accommodationsDb.ToList();
         }
 

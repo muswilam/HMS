@@ -15,13 +15,15 @@ namespace HMS.Areas.Dashboard.Controllers
         AccommodationPackagesService APServices = new AccommodationPackagesService();
 
         // GET: Dashboard/Accommodations
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string searchTerm, int? accommodationPackageId)
         {
             AccommodationsListingModel model = new AccommodationsListingModel();
 
-            model.Accommodations = AServices.GetAccommodationsBySearch(searchTerm);
+            model.Accommodations = AServices.GetAccommodationsBySearchOrPackageId(searchTerm , accommodationPackageId);
 
             model.SearchByName = searchTerm;
+            model.SearchByAccommodationPackageId = accommodationPackageId;
+            model.AccommodationPackages = APServices.GetAllAccommodationPackages();
 
             return View(model);
         }
@@ -105,6 +107,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return Result(result);
         }
 
+        // json data
         public JsonResult Result(bool resultMethod)
         {
             JsonResult json = new JsonResult();
