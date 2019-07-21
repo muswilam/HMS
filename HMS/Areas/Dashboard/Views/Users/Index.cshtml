@@ -1,13 +1,13 @@
-﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationsListingModel
+﻿@model HMS.Areas.Dashboard.ViewModels.UsersListingModel
 
 
 @{
-	ViewBag.Title = "Accommodations";
+	ViewBag.Title = "Users";
 }
 
 <div class="row">
 	<div class="col col-lg-12">
-		<h2>Accommodations</h2>
+		<h2>Users</h2>
 		<hr />
 	</div>
 </div>
@@ -17,16 +17,16 @@
 		<form>
 			<div class="input-group">
 				<input type="text" name="searchTerm" class="form-control" placeholder="Search." value="@Model.SearchByName">
-				@if (Model.AccommodationPackages != null && Model.AccommodationPackages.Count() > 0)
+				@if (Model.Roles != null && Model.Roles.Count() > 0)
 				{
-					<select class="form-control" name="accommodationPackageId">
+					<select class="form-control" name="roleId">
 						<option value="0">
-							Select Package.
+							Select Role.
 						</option>
-						@foreach (var ap in Model.AccommodationPackages)
+						@foreach (var role in Model.Roles)
 						{
-							<option value="@ap.Id" @(Model.SearchByAccommodationPackageId == ap.Id ? "selected" : string.Empty)>
-								@ap.Name
+							<option value="@role.Id" @(Model.SearchByRoleId == role.Id ? "selected" : string.Empty)>
+								@role.Name
 							</option>
 						}
 					</select>
@@ -34,8 +34,8 @@
 
 				<div class="input-group-append" id="button-addon4">
 					<button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i> Search</button>
-					<a class="btn btn-outline-secondary" href="@Url.Action("Index","Accommodations")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
-					<button data-href="@Url.Action("Action", "Accommodations")" class="action-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal"><i class="fas fa-plus mr-1"></i>Create</button>
+					<a class="btn btn-outline-secondary" href="@Url.Action("Index","Users")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
+					<button data-href="@Url.Action("Action", "Users")" class="action-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal"><i class="fas fa-plus mr-1"></i>Create</button>
 				</div>
 			</div>
 		</form>
