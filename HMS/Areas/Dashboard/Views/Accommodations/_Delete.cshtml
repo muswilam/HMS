@@ -38,7 +38,7 @@
             if(result.success) {
                 location.href = '@Url.Action("Index","Accommodations")'
             } else {
-                $("#errorDiv").html(result.message);
+                $(".errorDiv").html(result.message);
             }
         });
     });

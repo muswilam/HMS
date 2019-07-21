@@ -54,16 +54,13 @@ namespace HMS.Areas.Dashboard.Controllers
             SignInManager = signInManager;
         }
 
-        AccommodationsService AServices = new AccommodationsService();
-        AccommodationPackagesService APServices = new AccommodationPackagesService();
-
         // GET: Dashboard/Accommodations
         public ActionResult Index(string searchTerm, string roleId, int? page)
         {
             UsersListingModel model = new UsersListingModel();
 
             page = page ?? 1;
-            var pageSize = 2;
+            var pageSize = 10;
             var totalRecords = GetAllUsersCount(searchTerm, roleId);
 
             model.Users = SearchUsers(searchTerm, roleId, page.Value, pageSize);
@@ -174,6 +171,36 @@ namespace HMS.Areas.Dashboard.Controllers
             }
 
             json.Data = new { success = result.Succeeded, message = string.Join(" , ", result.Errors) };
+            return json;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Delete(string id)
+        {
+            UsersActionModel model = new UsersActionModel();
+
+            var user = await UserManager.FindByIdAsync(id);
+
+            model.Id = user.Id;
+            model.UserName = user.UserName;
+
+            return PartialView("_Delete", model);
+        }
+
+        // delete (post)
+        public async Task<JsonResult> Delete(UsersActionModel formModel)
+        {
+            JsonResult json = new JsonResult();
+
+            if (!string.IsNullOrEmpty(formModel.Id))
+            {
+                var user = await UserManager.FindByIdAsync(formModel.Id);
+
+                var result = await UserManager.DeleteAsync(user);
+                json.Data = new { success = result.Succeeded, message = string.Join(" , ", result.Errors) };
+            }
+            else
+                json.Data = new { success = false, message = "Invalid user." };
 
             return json;
         }

@@ -1,4 +1,4 @@
-﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationPackagesActionModel
+﻿@model HMS.Areas.Dashboard.ViewModels.UsersActionModel
 
 @if (Model != null)
 {
@@ -15,28 +15,27 @@
                 <input type="hidden" name="id" value="@Model.Id" />
             </form>
             <div class="alert alert-danger" role="alert">
-                Are you sure ? you wanna delete @Model.Name
+                Are you sure ? you wanna delete @Model.UserName
             </div>
             <div class="errorDiv"></div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
-            <button id="deleteActionBtn" type="button" class="btn btn-danger"> <i class="fas fa-trash-alt mr-1"></i>Delete</button>
+            <button id="deleteBtn" type="button" class="btn btn-danger"> <i class="fas fa-trash-alt mr-1"></i>Delete</button>
         </div>
     </div>
 }
 
-
 <script>    
-    $("#deleteActionBtn").click(function () {
+    $("#deleteBtn").click(function () {
         $.ajax({
-            url: '@Url.Action("Delete","AccommodationPackages")',
+            url: '@Url.Action("Delete","Users")',
             type: 'Post',
             data: $("#actionForm").serialize()
         })
         .done(function (result) {
             if (result.success) {
-                location.href ='@Url.Action("Index","AccommodationPackages")'
+                location.href ='@Url.Action("Index","Users")'
             } else {
                 $(".errorDiv").html(result.message);
             }

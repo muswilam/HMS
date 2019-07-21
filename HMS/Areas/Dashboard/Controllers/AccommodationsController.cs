@@ -112,7 +112,5 @@ namespace HMS.Areas.Dashboard.Controllers
             
             return JsonDataResult.Result(result);
         }
-
-        
     }
 }
