@@ -22,15 +22,13 @@ namespace HMS.Areas.Dashboard.ViewModels
 
     public class UsersActionModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public string Id { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
 
-        //note, identity framework made id string
-        public string RoleId { get; set; }
-        public IdentityRole Role { get; set; }
-
-        public IEnumerable<AccommodationPackage> AccommodationPackages { get; set; }
-
-        public IEnumerable<IdentityRole> Roles { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
     }
 }

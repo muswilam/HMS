@@ -1,18 +1,18 @@
-﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationsActionModel
+﻿@model HMS.Areas.Dashboard.ViewModels.UsersActionModel
 
 @if (Model != null)
 {
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">
-                @if (Model.Id == 0)
+                @if (string.IsNullOrEmpty(Model.Id))
                 {
-                    <text> Create Accommodation Package </text>
+                    <text> Create User </text>
                 }
                 else
                 {
 
-                    <text> Edit Accommodation Package </text>
+                    <text> Edit User </text>
                 }
             </h5>
 
@@ -24,29 +24,28 @@
             <form id="actionForm">
                 <input type="hidden" name="id" value="@Model.Id" />
                 <div class="form-group">
-                    <label>Name</label>
-                    <input class="form-control" name="name" placeholder="Enter Accommodation Type name." value="@Model.Name">
+                    <label>Full Name</label>
+                    <input class="form-control" name="fullName" placeholder="Enter Full Name." value="@Model.FullName">
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
-                    <textarea class="form-control" name="description" placeholder="Enter Accommodation Type Description.">@Model.Description</textarea>
+                    <label>Email</label>
+                    <input class="form-control" name="email" placeholder="Enter Email." value="@Model.Email">
                 </div>
                 <div class="form-group">
-                    <label>Accommodation Package</label>
-                    <select class="form-control" name="accommodationPackageId" required>
-                        @if (Model.AccommodationPackages != null)
-                        {
-                            <option value="0">
-                                Select Package.
-                            </option>
-                            foreach (var ap in Model.AccommodationPackages)
-                            {
-                                <option value="@ap.Id" @(ap.Id == Model.AccommodationPackageId ? "selected" : string.Empty)>
-                                    @ap.Name
-                                </option>
-                            }
-                        }
-                    </select>
+                    <label>User Name</label>
+                    <input class="form-control" name="userName" placeholder="Enter User Name." value="@Model.UserName">
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <input class="form-control" name="country" placeholder="Enter Country." value="@Model.Country">
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input class="form-control" name="city" placeholder="Enter City." value="@Model.City">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="address" placeholder="Enter Address.">@Model.Address</textarea>
                 </div>
             </form>
             <div class="errorDiv"></div>
@@ -62,7 +61,7 @@
 <script>
     $("#saveActionBtn").click(function () {
         $.ajax({
-            url: '@Url.Action("Action","Accommodations")',
+            url: '@Url.Action("Action","Users")',
             type: 'Post',
             data: $("#actionForm").serialize()
         })

@@ -65,6 +65,10 @@
     <Compile Include="Migrations\201907041438189_AddIdentityFramewokUsersToHMSContext.Designer.cs">
       <DependentUpon>201907041438189_AddIdentityFramewokUsersToHMSContext.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907211552235_AddUserProperties.cs" />
+    <Compile Include="Migrations\201907211552235_AddUserProperties.Designer.cs">
+      <DependentUpon>201907211552235_AddUserProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907041438189_AddIdentityFramewokUsersToHMSContext.resx">
       <DependentUpon>201907041438189_AddIdentityFramewokUsersToHMSContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907211552235_AddUserProperties.resx">
+      <DependentUpon>201907211552235_AddUserProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

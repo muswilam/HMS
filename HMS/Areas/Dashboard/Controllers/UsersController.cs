@@ -10,6 +10,8 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace HMS.Areas.Dashboard.Controllers
 {
@@ -51,7 +53,6 @@ namespace HMS.Areas.Dashboard.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
-
 
         AccommodationsService AServices = new AccommodationsService();
         AccommodationPackagesService APServices = new AccommodationPackagesService();
@@ -112,6 +113,69 @@ namespace HMS.Areas.Dashboard.Controllers
             return users.Count();
         }
 
+        // create and edit (get)
+        [HttpGet]
+        public async Task<ActionResult> Action(string id)
+        {
+            UsersActionModel model = new UsersActionModel();
 
+            if (!string.IsNullOrEmpty(id)) // edit
+            {
+                var user = await UserManager.FindByIdAsync(id);
+
+                model.Id = user.Id;
+                model.FullName = user.FullName;
+                model.Email = user.Email;
+                model.UserName = user.UserName;
+                model.Country = user.Country;
+                model.City = user.City;
+                model.Address = user.Address;
+            }
+
+            return PartialView("_Action", model);
+        }
+
+        // create and edit (post) 
+        [HttpPost]
+        public async Task<JsonResult> Action(UsersActionModel formModel)
+        {
+            JsonResult json = new JsonResult();
+
+            IdentityResult result = null;
+
+            if (string.IsNullOrEmpty(formModel.Id)) //Create
+            {
+                var user = new HMSUser();
+
+                user.FullName = formModel.FullName;
+                user.Email = formModel.Email;
+                user.UserName = formModel.UserName;
+
+                user.Country = formModel.Country;
+                user.City = formModel.City;
+                user.Address = formModel.Address;
+
+                result = await UserManager.CreateAsync(user);
+
+            }
+            else //edit
+            {
+                var user = await UserManager.FindByIdAsync(formModel.Id);
+
+                user.FullName = formModel.FullName;
+                user.Email = formModel.Email;
+                user.UserName = formModel.UserName;
+
+                user.Country = formModel.Country;
+                user.City = formModel.City;
+                user.Address = formModel.Address;
+
+                result = await UserManager.UpdateAsync(user);
+            }
+
+            json.Data = new { success = result.Succeeded, message = string.Join(" , ", result.Errors) };
+
+            return json;
+        }
     }
 }
