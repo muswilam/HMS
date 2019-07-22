@@ -1,10 +1,10 @@
-﻿@model HMS.Areas.Dashboard.ViewModels.UsersActionModel
+﻿@model HMS.Areas.Dashboard.ViewModels.RolesActionModel
 
 @if (Model != null)
 {
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title"> Delete User </h5>
+            <h5 class="modal-title"> Delete Role </h5>
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -15,7 +15,7 @@
                 <input type="hidden" name="id" value="@Model.Id" />
             </form>
             <div class="alert alert-danger" role="alert">
-                Are you sure ? you wanna delete @Model.UserName
+                Are you sure ? you wanna delete @Model.Name
             </div>
             <div class="errorDiv"></div>
         </div>
@@ -29,16 +29,17 @@
 <script>    
     $("#deleteBtn").click(function () {
         $.ajax({
-            url: '@Url.Action("Delete","Users")',
+            url: '@Url.Action("Delete","Roles")',
             type: 'Post',
             data: $("#actionForm").serialize()
         })
         .done(function (result) {
             if (result.success) {
-                location.href ='@Url.Action("Index","Users")'
+                location.href ='@Url.Action("Index","Roles")'
             } else {
                 $(".errorDiv").html(result.message);
             }
         });
     });
+
 </script>

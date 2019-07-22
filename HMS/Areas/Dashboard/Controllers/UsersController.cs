@@ -74,7 +74,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return View(model);
         }
 
-        //get list of Users by search for name or by role
+        // get list of Users by search for name or by role
         public IEnumerable<HMSUser> SearchUsers(string searchTerm, string roleId, int page, int pageSize)
         {
             var users = UserManager.Users.Include(u => u.Roles).AsQueryable();
@@ -93,7 +93,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return users.OrderBy(a => a.Email).Skip(skip).Take(pageSize).ToList();
         }
 
-        //get total number of records
+        // get total number of records
         public int GetAllUsersCount(string searchTerm, string roleId)
         {
             var users = UserManager.Users.Include(u => u.Roles).AsQueryable();
@@ -174,6 +174,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return json;
         }
 
+        // delete get
         [HttpGet]
         public async Task<ActionResult> Delete(string id)
         {

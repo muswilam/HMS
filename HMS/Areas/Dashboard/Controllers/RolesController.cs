@@ -158,5 +158,36 @@ namespace HMS.Areas.Dashboard.Controllers
             return json;
         }
 
+        // delete get
+        [HttpGet]
+        public async Task<ActionResult> Delete(string id)
+        {
+            RolesActionModel model = new RolesActionModel();
+
+            var role = await RoleManager.FindByIdAsync(id);
+
+            model.Id = role.Id;
+            model.Name = role.Name;
+
+            return PartialView("_Delete", model);
+        }
+
+        // delete (post)
+        public async Task<JsonResult> Delete(RolesActionModel formModel)
+        {
+            JsonResult json = new JsonResult();
+
+            if (!string.IsNullOrEmpty(formModel.Id))
+            {
+                var role = await RoleManager.FindByIdAsync(formModel.Id);
+
+                var result = await RoleManager.DeleteAsync(role);
+                json.Data = new { success = result.Succeeded, message = string.Join(" , ", result.Errors) };
+            }
+            else
+                json.Data = new { success = false, message = "Invalid user." };
+
+            return json;
+        }
     }
 }
