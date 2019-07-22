@@ -244,6 +244,7 @@
     <Content Include="Areas\Dashboard\Views\Users\_Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\Roles\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Roles\_Listing.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Roles\_Action.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -10,6 +10,8 @@ using System.Data.Entity;
 using HMS.Areas.Dashboard.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
 using HMS.ViewModels;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace HMS.Areas.Dashboard.Controllers
 {
@@ -64,7 +66,7 @@ namespace HMS.Areas.Dashboard.Controllers
             RoleManager = roleManger;
         }
 
-        public ActionResult Index(string searchTerm, int? page)
+        public ActionResult Index(string searchTerm, int? page) 
         {
             RolesListingViewModel model = new RolesListingViewModel();
 
@@ -108,5 +110,53 @@ namespace HMS.Areas.Dashboard.Controllers
 
             return roles.Count();
         }
+
+        // create and edit (get)
+        [HttpGet]
+        public async Task<ActionResult> Action(string id)
+        {
+            RolesActionModel model = new RolesActionModel();
+
+            if (!string.IsNullOrEmpty(id)) // edit
+            {
+                var role = await RoleManager.FindByIdAsync(id);
+
+                model.Id = role.Id;
+                model.Name = role.Name; 
+            }
+
+            return PartialView("_Action", model);
+        }
+
+        // create and edit (post) 
+        [HttpPost]
+        public async Task<JsonResult> Action(RolesActionModel formModel)
+        {
+            JsonResult json = new JsonResult();
+
+            IdentityResult result = null;
+
+            if (string.IsNullOrEmpty(formModel.Id)) //Create
+            {
+                var role = new IdentityRole();
+
+                role.Name = formModel.Name;
+
+                result = await RoleManager.CreateAsync(role);
+
+            }
+            else //edit
+            {
+                var role = await RoleManager.FindByIdAsync(formModel.Id);
+
+                role.Name = formModel.Name;
+
+                result = await RoleManager.UpdateAsync(role);
+            }
+
+            json.Data = new { success = result.Succeeded, message = string.Join(" , ", result.Errors) };
+            return json;
+        }
+
     }
 }
