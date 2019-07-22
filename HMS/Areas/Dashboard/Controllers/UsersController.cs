@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
 
 namespace HMS.Areas.Dashboard.Controllers
 {
@@ -20,6 +21,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
         private HMSSignInManager _signInManager;
         private HMSUserManager _userManager;
+        private HMSRoleManager _roleManager;
 
         public HMSSignInManager SignInManager
         {
@@ -43,15 +45,27 @@ namespace HMS.Areas.Dashboard.Controllers
                 _userManager = value;
             }
         }
+        public HMSRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().GetUserManager<HMSRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
 
         public UsersController()
         {
         }
 
-        public UsersController(HMSUserManager userManager, HMSSignInManager signInManager)
+        public UsersController(HMSUserManager userManager, HMSSignInManager signInManager, HMSRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
         // GET: Dashboard/Accommodations
@@ -67,7 +81,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
             model.SearchByName = searchTerm;
             model.SearchByRoleId = roleId;
-            //model.Roles = APServices.GetAllAccommodationPackages();
+            model.Roles = RoleManager.Roles.ToList();
 
             model.Pager = new Pager(totalRecords, page, pageSize);
 
@@ -204,6 +218,21 @@ namespace HMS.Areas.Dashboard.Controllers
                 json.Data = new { success = false, message = "Invalid user." };
 
             return json;
+        }
+
+        // Get List of User Roles and List of Roles that can assign to him
+        [HttpGet]
+        public async Task<ActionResult> UserRoles(string id)
+        {
+            UserRolesModel model = new UserRolesModel();
+
+            model.Roles = RoleManager.Roles.ToList();
+
+            var user = await UserManager.FindByIdAsync(id);
+            var userRolesId = user.Roles.Select(r => r.RoleId).ToList();
+            model.UserRoles = RoleManager.Roles.Where(r => userRolesId.Contains(r.Id)).ToList();
+
+            return PartialView("_UserRoles", model);
         }
     }
 }
