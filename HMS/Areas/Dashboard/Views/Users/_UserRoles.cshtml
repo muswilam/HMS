@@ -14,7 +14,7 @@
 
             @if (Model.UserRoles != null && Model.UserRoles.Count() > 0)
             {
-                <table id="userRolesTbl" class="table table-striped">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th colspan="2" style="text-align:center">
@@ -28,7 +28,7 @@
                             <tr>
                                 <td>@role.Name</td>
                                 <td>
-                                    <button data-href="@Url.Action("DeleteUserRole", "Users", new { userId = Model.UserId, roleId = role.Id })" type="button" class="action-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="fas fa-user-times mr-1"></i> Delete</button>
+                                    <button data-href="@Url.Action("UserRoleOperation", "Users", new { userId = Model.UserId, roleId = role.Id , isDelete = true })" type="button" class="operationRolebtn btn btn-danger"><i class="fas fa-user-times mr-1"></i> Remove </button>
                                 </td>
                             </tr>
                         }
@@ -44,14 +44,14 @@
 
             <hr />
 
-            @if (Model.Roles != null && Model.Roles.Count() > 0 )
+            @if (Model.Roles != null && Model.Roles.Count() > 0)
             {
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                           <th colspan="2" style="text-align:center">
-                               Assign New Roles
-                           </th>
+                            <th colspan="2" style="text-align:center">
+                                Assign New Roles
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,26 +60,37 @@
                             <tr>
                                 <td>@role.Name</td>
                                 <td>
-                                    <button data-href="@Url.Action("AssignUserRole", "Users", new { userId = Model.UserId , roleId = role.Id })" type="button" class="assign-role-btn btn btn-success"><i class="fas fa-user-check mr-1"></i> Assign </button>
+                                    <button data-href="@Url.Action("UserRoleOperation", "Users", new { userId = Model.UserId, roleId = role.Id })" type="button" class="operationRolebtn btn btn-success"><i class="fas fa-user-check mr-1"></i> Assign </button>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             }
+            <div class="errorDiv"></div>
         </div>
     </div>
 }
 
 <script>
     $(document).ready(function () {
-        $(".assign-role-btn").click(function () {
+        $(".operationRolebtn").click(function () {
             $.ajax({
                 url: $(this).attr("data-href"),
                 type: 'Post'
             })
             .done(function (result) {
-                debugger;
+                if (result != null && result.success) {
+                    $.ajax({
+                        url: '@Url.Action("UserRoles", "Users", new { id = Model.UserId })'
+                    })
+                    .done(function (result) {
+                        $("#actionModal .modal-dialog").html(result);
+                        debugger;
+                    });
+                } else {
+                    $(".errorDiv").html(result);
+                }
             });
         });
     });

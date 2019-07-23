@@ -239,16 +239,21 @@ namespace HMS.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> AssignUserRole(string roleId , string userId)
+        public async Task<JsonResult> UserRoleOperation(string roleId , string userId , bool isDelete = false)
         {
             JsonResult json = new JsonResult();
+            IdentityResult result = null;
 
             var user = await UserManager.FindByIdAsync(userId);
             var role = await RoleManager.FindByIdAsync(roleId);
 
             if(user != null && role != null)
             {
-               var result = await UserManager.AddToRoleAsync(userId, role.Name);
+                if(!isDelete) // assign new role
+                    result = await UserManager.AddToRoleAsync(userId, role.Name);
+                else // delete role
+                    result = await UserManager.RemoveFromRoleAsync(userId, role.Name);
+
                json.Data = new { success = result.Succeeded , message = string.Join(" ,  ", result.Errors)};
             }
             else
