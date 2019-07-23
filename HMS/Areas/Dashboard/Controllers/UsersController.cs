@@ -69,15 +69,15 @@ namespace HMS.Areas.Dashboard.Controllers
         }
 
         // GET: Dashboard/Accommodations
-        public ActionResult Index(string searchTerm, string roleId, int? page)
+        public async Task<ActionResult> Index(string searchTerm, string roleId, int? page)
         {
             UsersListingModel model = new UsersListingModel();
 
             page = page ?? 1;
             var pageSize = 10;
-            var totalRecords = GetAllUsersCount(searchTerm, roleId);
+            var totalRecords = await GetAllUsersCount(searchTerm, roleId);
 
-            model.Users = SearchUsers(searchTerm, roleId, page.Value, pageSize);
+            model.Users = await SearchUsers(searchTerm, roleId, page.Value, pageSize);
 
             model.SearchByName = searchTerm;
             model.SearchByRoleId = roleId;
@@ -89,9 +89,9 @@ namespace HMS.Areas.Dashboard.Controllers
         }
 
         // get list of Users by search for name or by role
-        public IEnumerable<HMSUser> SearchUsers(string searchTerm, string roleId, int page, int pageSize)
+        public async Task<IEnumerable<HMSUser>> SearchUsers(string searchTerm, string roleId, int page, int pageSize)
         {
-            var users = UserManager.Users.Include(u => u.Roles).AsQueryable();
+            var users = UserManager.Users.AsQueryable();
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -99,7 +99,12 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             if (!string.IsNullOrEmpty(roleId))
             {
-               // users = users.Where(a => a.Email.ToLower().Contains(searchTerm.ToLower()));
+                var role = await RoleManager.FindByIdAsync(roleId); //get the role of the roleId
+                var userIds = role.Users.Select(u => u.UserId); //get all userIds that have this role 
+                users = users.Where(u => userIds.Contains(u.Id)); //iterate of these userIds to find the matching users 
+
+               /* users = users.Where(u => u.Roles.Select(r => r.RoleId).Contains(roleId)); 
+                 ****** same result with above code but low performance cos of searching in all users ******  */
             }
 
             var skip = (page - 1) * pageSize;
@@ -108,9 +113,9 @@ namespace HMS.Areas.Dashboard.Controllers
         }
 
         // get total number of records
-        public int GetAllUsersCount(string searchTerm, string roleId)
+        public async Task<int> GetAllUsersCount(string searchTerm, string roleId)
         {
-            var users = UserManager.Users.Include(u => u.Roles).AsQueryable();
+            var users = UserManager.Users.AsQueryable();
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -118,7 +123,9 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             if (!string.IsNullOrEmpty(roleId))
             {
-               // accommodationsDb = accommodationsDb.Where(a => a.AccommodationPackageId == accommodationPackageId.Value);
+                var role = await RoleManager.FindByIdAsync(roleId);
+                var userIds = role.Users.Select(u => u.UserId); 
+                users = users.Where(u => userIds.Contains(u.Id)); 
             }
 
             return users.Count();

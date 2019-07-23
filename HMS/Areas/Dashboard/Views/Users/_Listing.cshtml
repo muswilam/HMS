@@ -6,9 +6,10 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th scope="col">Full Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">User Name</th>
-                <th scope="col">Role</th>
+                <th scope="col">Roles</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -16,14 +17,14 @@
             @foreach (var user in Model.Users)
             {
                 <tr>
+                    <td>@user.FullName</td>
                     <td> @user.Email</td>
                     <td> @user.UserName</td>
-                    @*<td> @user.</td>*@
-                    <td>-</td>
+                    <td> @user.Roles.Count()</td>
                     <td>
                         <button data-href="@Url.Action("Action", "Users", new { id = user.Id })" type="button" class="action-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i> Edit</button>
                         <button data-href="@Url.Action("Delete", "Users", new { id = user.Id })" type="button" class="action-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
-                        <button data-href="@Url.Action("UserRoles", "Users", new { id = user.Id })" type="button" class="action-btn btn btn-info" data-toggle="modal" data-target="#actionModal"><i class="fas fa-users-cog mr-1"></i> Roles</button>
+                        <button data-href="@Url.Action("UserRoles", "Users", new { id = user.Id })" type="button" class="action-btn btn btn-info" data-toggle="modal" data-target="#actionModal"><i class="fas fa-user-shield mr-1"></i> Roles</button>
                     </td>
                 </tr>
             }
@@ -41,7 +42,7 @@
                         new
                         {
                             searchTerm = Model.SearchByName,
-                            accommodationPackageId = Model.SearchByRoleId
+                            roleId = Model.SearchByRoleId
                         })">
                             <i class="fas fa-angle-double-left"></i>
                         </a>
@@ -52,7 +53,7 @@
                         {
                             page = Model.Pager.CurrentPage - 1,
                             searchTerm = Model.SearchByName,
-                            accommodationPackageId = Model.SearchByRoleId
+                            roleId = Model.SearchByRoleId
                         })">
                             <i class="fas fa-angle-left"></i>
                         </a>
@@ -67,7 +68,7 @@
                         {
                             page = page,
                             searchTerm = Model.SearchByName,
-                            accommodationPackageId = Model.SearchByRoleId
+                            roleId = Model.SearchByRoleId
                         })">@page</a>
                     </li>
                 }
@@ -80,7 +81,7 @@
                         {
                             page = Model.Pager.CurrentPage + 1,
                             searchTerm = Model.SearchByName,
-                            accommodationPackageId = Model.SearchByRoleId
+                            roleId = Model.SearchByRoleId
                         })">
                             <i class="fas fa-angle-right"></i>
                         </a>
@@ -91,7 +92,7 @@
                         {
                             page = Model.Pager.TotalPages,
                             searchTerm = Model.SearchByName,
-                            accommodationPackageId = Model.SearchByRoleId
+                            roleId = Model.SearchByRoleId
                         })">
                             <i class="fas fa-angle-double-right"></i>
                         </a>

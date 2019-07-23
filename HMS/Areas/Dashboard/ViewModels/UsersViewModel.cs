@@ -17,7 +17,6 @@ namespace HMS.Areas.Dashboard.ViewModels
 
         public string SearchByName { get; set; }
         public string SearchByRoleId { get; set; }
-
     }
 
     public class UsersActionModel
