@@ -226,13 +226,35 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             UserRolesModel model = new UserRolesModel();
 
-            model.Roles = RoleManager.Roles.ToList();
+            model.UserId = id;
 
             var user = await UserManager.FindByIdAsync(id);
             var userRolesId = user.Roles.Select(r => r.RoleId).ToList();
+
             model.UserRoles = RoleManager.Roles.Where(r => userRolesId.Contains(r.Id)).ToList();
 
+            model.Roles = RoleManager.Roles.Where(r => !userRolesId.Contains(r.Id)).ToList();
+
             return PartialView("_UserRoles", model);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AssignUserRole(string roleId , string userId)
+        {
+            JsonResult json = new JsonResult();
+
+            var user = await UserManager.FindByIdAsync(userId);
+            var role = await RoleManager.FindByIdAsync(roleId);
+
+            if(user != null && role != null)
+            {
+               var result = await UserManager.AddToRoleAsync(userId, role.Name);
+               json.Data = new { success = result.Succeeded , message = string.Join(" ,  ", result.Errors)};
+            }
+            else
+                json.Data = new { success = false, message = "Invalid operation." };
+
+            return json;
         }
     }
 }
