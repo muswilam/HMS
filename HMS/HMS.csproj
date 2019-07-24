@@ -174,6 +174,8 @@
     <Compile Include="Areas\Dashboard\ViewModels\AccommodationTypesListingModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\RolesViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\UsersViewModel.cs" />
+    <Compile Include="Code\DefaultRoleName.cs" />
+    <Compile Include="Code\HotelNames.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />

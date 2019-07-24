@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using HMS.Code;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -86,14 +88,14 @@
                     <div class="row">
                         <div class="col-xs-2">
                             <div id="colorlib-logo">
-                                <a href="index.html">
-                                    BalaliQa
+                                <a href="@Url.Action("Index","Home")">
+                                    @HotelNames.HotelShortName Hotel
                                 </a>
                             </div>
                         </div>
                         <div class="col-xs-10 text-right menu-1">
                             <ul>
-                                <li class="active"><a href="index.html">Home</a></li>
+                                <li class="active"><a href="@Url.Action("Index","Home")">Home</a></li>
                                 <li class="has-dropdown">
                                     <a href="rooms-suites.html">Rooms</a>
                                     <ul class="dropdown">
@@ -105,15 +107,34 @@
                                 </li>
                                 <li><a href="dining-bar.html">Dining &amp; Bar</a></li>
                                 <li><a href="aminities.html">Aminities</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="about.html">About</a></li>
                                 <li><a href="contact.html">Contact</a></li>
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <li><a href="@Url.Action("Register","Account")">Register</a></li>
+                                    <li><a href="@Url.Action("Login","Account")">Login</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("Index","Manage")">Hi! @User.Identity.Name</a></li>
+                                    <li>
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">
+                                            Logout
+                                        </a>
+                                    </li>
+                                }
+                            
+
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
+
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+        }
 
         @RenderBody()
 
@@ -144,7 +165,9 @@
             <div class="container">
                 <div class="row row-pb-md">
                     <div class="col-md-3 colorlib-widget">
-                        <h4>Luxehotel</h4>
+                        <h4>
+                            @HotelNames.HotelFullName
+                        </h4>
                         <p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
                         <p>
                             <ul class="colorlib-social-icons">
