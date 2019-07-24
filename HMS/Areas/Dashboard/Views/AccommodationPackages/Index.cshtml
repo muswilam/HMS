@@ -1,9 +1,10 @@
 ﻿@model HMS.Areas.Dashboard.ViewModels.AccommodationPackagesListingModel
 
-
 @{
 	ViewBag.Title = "Accommodation Packages";
 }
+
+<script src="~/Areas/Dashboard/Scripts/ViewScript.js"></script>
 
 <div class="row">
 	<div class="col col-lg-12">
@@ -41,9 +42,7 @@
 			</div>
 		</form>
 	</div>
-
 </div>
-
 
 <div class="row">
 	<div class="col col-lg-12">
@@ -52,22 +51,8 @@
 	</div>
 </div>
 
-
 <div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 
 	</div>
 </div>
-
-<script>
-	$(document).ready(function () {
-		$(".action-btn").click(function () {
-			$.ajax({
-				url: $(this).attr("data-href"),
-			})
-			.done(function (result) {
-				$("#actionModal .modal-dialog").html(result);
-			});
-		});
-	});
-</script>

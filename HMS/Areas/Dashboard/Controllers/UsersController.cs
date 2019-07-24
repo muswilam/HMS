@@ -12,7 +12,6 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using System.Data.Entity;
 
 namespace HMS.Areas.Dashboard.Controllers
 {
@@ -227,7 +226,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return json;
         }
 
-        // Get List of User Roles and List of Roles that can assign to him
+        // Get a List of UserRoles and List of Roles that can assign to him
         [HttpGet]
         public async Task<ActionResult> UserRoles(string id)
         {
@@ -245,6 +244,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return PartialView("_UserRoles", model);
         }
 
+        // assigining user to a role or removing user from a role
         [HttpPost]
         public async Task<JsonResult> UserRoleOperation(string roleId , string userId , bool isDelete = false)
         {

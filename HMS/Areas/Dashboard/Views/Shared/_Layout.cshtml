@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -72,12 +71,10 @@
             </div>
         </div>
         <!-- /#page-content-wrapper -->
-
         @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
-             @Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()
         }
-
 
     </div>
     <!-- /#wrapper -->
@@ -93,5 +90,4 @@
     </script>
 
 </body>
-
 </html>

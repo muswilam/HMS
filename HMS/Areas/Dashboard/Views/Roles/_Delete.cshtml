@@ -2,6 +2,8 @@
 
 @if (Model != null)
 {
+    <script src="~/Areas/Dashboard/Scripts/DeleteActionScript.js"></script>
+
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title"> Delete Role </h5>
@@ -21,25 +23,9 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
-            <button id="deleteBtn" type="button" class="btn btn-danger"> <i class="fas fa-trash-alt mr-1"></i>Delete</button>
+            <button data-href="@Url.Action("Delete","Roles")" href-target="@Url.Action("Index","Roles")" id="deleteActionBtn" type="button" class="btn btn-danger">
+                <i class="fas fa-trash-alt mr-1"></i>Delete
+            </button>
         </div>
     </div>
 }
-
-<script>    
-    $("#deleteBtn").click(function () {
-        $.ajax({
-            url: '@Url.Action("Delete","Roles")',
-            type: 'Post',
-            data: $("#actionForm").serialize()
-        })
-        .done(function (result) {
-            if (result.success) {
-                location.href ='@Url.Action("Index","Roles")'
-            } else {
-                $(".errorDiv").html(result.message);
-            }
-        });
-    });
-
-</script>
