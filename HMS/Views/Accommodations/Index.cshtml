@@ -1,0 +1,81 @@
+﻿@model HMS.ViewModels.AccommodationsViewModel
+
+<aside id="colorlib-hero">
+    <div class="flexslider">
+        <ul class="slides">
+            <li style="background-image: url(images/img_bg_5.jpg);">
+                <div class="overlay"></div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                            <div class="slider-text-inner slider-text-inner2 text-center">
+                                <h2>Choose our Best</h2>
+                                <h1> Hotel Rooms &amp; Apartments </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+@if (Model != null && Model.AccommodationPackages != null && Model.AccommodationPackages.Count() > 0)
+{
+
+    <div id="colorlib-rooms" class="colorlib-light-grey">
+        <div class="container">
+            <ul class="nav nav-tabs">
+                @foreach (var ap in Model.AccommodationPackages)
+                {
+                    <li role="presentation" class="@(ap.Id == Model.SelectedAccommodationPackageId ? "active" : string.Empty)">
+                        <a href="@Url.Action("Index", "Accommodations", new
+                            {
+                                area = "",
+                                accommodationTypeId = Model.AccommodationType.Id,
+                                accommodationPackageId = ap.Id
+                            })">
+                        @ap.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+            <br />
+            <div class="row">
+           
+                @if (Model.Accommodations != null && Model.Accommodations.Count() > 0)
+                {
+                    foreach (var accommodation in Model.Accommodations)
+                    {
+                        <div class="col-md-4 room-wrap animate-box">
+                            <a href="images/room-1.jpg" class="room image-popup-link" style="background-image: url(images/room-1.jpg);"></a>
+                            <div class="desc text-center">
+                                <span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
+                                <h3>
+                                    <a href="rooms-suites.html">
+                                        @accommodation.Name
+                                    </a>
+                                </h3>
+                                <p class="price">
+                                    <span class="currency">$</span>
+                                    <span class="price-room">@accommodation.AccommodationPackage.FeePerNight</span>
+                                    <span class="per">/ per night</span>
+                                </p>
+                                <ul>
+                                    <li><i class="icon-check"></i> @accommodation.AccommodationPackage.NoOfRoom </li>
+                                </ul>
+                                <p><a class="btn btn-primary">Book now!</a></p>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        No Accommodations Found.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

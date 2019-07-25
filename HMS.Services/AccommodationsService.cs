@@ -25,6 +25,12 @@ namespace HMS.Services
             return context.Accommodations.Include(a => a.AccommodationPackage).ToList();
         }
 
+        //get all accommodations by accommodation package id
+        public IEnumerable<Accommodation> GetAllAccommodationsByAccommodationPackage(int accommodationId)
+        {
+            return context.Accommodations.Where(a => a.AccommodationPackageId == accommodationId).Include(a => a.AccommodationPackage).ToList();
+        }
+
         //get list of accommodaation by search for name or by accommodation package
         public IEnumerable<Accommodation> GetAccommodationsBySearchOrPackageId(string searchTerm , int? accommodationPackageId, int page , int pageSize)
         {
