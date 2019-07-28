@@ -345,6 +345,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
+    <Folder Include="Images\Site\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

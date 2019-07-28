@@ -3,7 +3,7 @@
 @if (Model != null)
 {
     <script src="~/Areas/Dashboard/Scripts/SaveActionScript.js"></script>
-    
+
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">
@@ -54,7 +54,10 @@
                             }
                         }
                     </select>
-
+                </div>
+                <div class="form-group">
+                    <label>Pictures</label>
+                    <input id="selectPictures" class="form-control-file" name="pictures" type="file" multiple />
                 </div>
             </form>
             <div class="errorDiv"></div>
@@ -65,3 +68,27 @@
         </div>
     </div>
 }
+
+<script>
+    $("#selectPictures").change(function () {
+        var pictures = this.files;
+
+        var formData = new FormData();
+
+        for (var i = 0; i < pictures.length; i++) {
+            formData.append("Picture", pictures[i]);
+        }
+        $("#saveActionBtn").click(function () {
+            $.ajax({
+                url: '@Url.Action("UploadPictures","Dashboard")',
+                type: 'Post',
+                data: formData,
+                processData: false,
+                contentType: false
+            })
+            .done(function (result) {
+                debugger;
+            });
+        });
+    });
+</script>
