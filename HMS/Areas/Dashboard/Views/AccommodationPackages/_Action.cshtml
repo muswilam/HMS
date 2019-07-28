@@ -59,6 +59,8 @@
                     <label>Pictures</label>
                     <input id="selectPictures" class="form-control-file" name="pictures" type="file" multiple />
                 </div>
+                <div id="picsArea">
+                </div>
             </form>
             <div class="errorDiv"></div>
         </div>
@@ -69,6 +71,10 @@
     </div>
 }
 
+<div id="imageTemplate">
+    <img src="" class="img-thumbnail" style="width:230px" />
+</div>
+
 <script>
     $("#selectPictures").change(function () {
         var pictures = this.files;
@@ -78,17 +84,24 @@
         for (var i = 0; i < pictures.length; i++) {
             formData.append("Picture", pictures[i]);
         }
-        $("#saveActionBtn").click(function () {
-            $.ajax({
-                url: '@Url.Action("UploadPictures","Dashboard")',
-                type: 'Post',
-                data: formData,
-                processData: false,
-                contentType: false
-            })
-            .done(function (result) {
-                debugger;
-            });
+        
+        $.ajax({
+            url: '@Url.Action("UploadPictures","Dashboard")',
+            type: 'Post',
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+        .done(function (result) {
+            for (var i = 0; i < result.length; i++) {
+                var picture = result[i];
+                    
+                var imgHTML = $("#imageTemplate").clone();
+
+                imgHTML.find("img").attr("src", "/images/site/" + picture.URL);
+
+                $("#picsArea").append(imgHTML.html());
+            }
         });
     });
 </script>
