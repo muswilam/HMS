@@ -15,5 +15,7 @@ namespace HMS.Entities
 
         public int AccommodationPackageId { get; set; }
         public AccommodationPackage AccommodationPackage { get; set; }
+
+        public List<AccommodationPicture> AccommodationPictures { get; set; }
     }
 }
