@@ -16,11 +16,19 @@ namespace HMS.Services
         {
             _context = new HMSContext();
         }
+
+        //save pic tto db
         public bool SavePicture(Picture picture)
         {
             _context.Pictures.Add(picture);
 
             return _context.SaveChanges() > 0;
+        }
+
+        //get pics by ids
+        public IEnumerable<Picture> GetPicturesByIds(List<int> picturesIds)
+        {
+            return picturesIds.Select(p => _context.Pictures.Find(p)).ToList();
         }
     }
 }

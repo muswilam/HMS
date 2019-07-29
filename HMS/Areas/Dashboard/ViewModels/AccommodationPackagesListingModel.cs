@@ -28,6 +28,8 @@ namespace HMS.Areas.Dashboard.ViewModels
         public int AccommodationTypeId { get; set; }
         public AccommodationType AccommodationType { get; set; }
 
+        public string PictureIds { get; set; }
+
         public IEnumerable<AccommodationType> AccommodationTypes { get; set; }
     }
 }

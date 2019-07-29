@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    <script src="~/Areas/Dashboard/Scripts/SaveActionScript.js"></script>
+    @*<script src="~/Areas/Dashboard/Scripts/SaveActionScript.js"></script>*@
 
     <div class="modal-content">
         <div class="modal-header">
@@ -58,6 +58,7 @@
                 <div class="form-group">
                     <label>Pictures</label>
                     <input id="selectPictures" class="form-control-file" name="pictures" type="file" multiple />
+                    <input type="hidden" id="pictureIds" name="PictureIds" value="" />
                 </div>
                 <div id="picsArea">
                 </div>
@@ -72,10 +73,34 @@
 }
 
 <div id="imageTemplate">
-    <img src="" class="img-thumbnail" style="width:230px" />
+    <img src="" class="img-thumbnail" style="width:230px" onclick="removeMe(this)"/>
 </div>
 
 <script>
+    $("#saveActionBtn").click(function () {
+        var pictureIds = [];
+
+        $("#picsArea img").each(function () {
+            var picId = $(this).attr("data-id");
+            pictureIds.push(picId);
+        });
+
+        $("#pictureIds").val(pictureIds.join());
+        debugger;
+        $.ajax({
+            url: $(this).attr("data-href"),
+            type: 'Post',
+            data: $("#actionForm").serialize()
+        })
+        .done(function (result) {
+            if (result.success) {
+                location.reload();
+            } else {
+                $(".errorDiv").html(result.message);
+            }
+        });
+    });
+
     $("#selectPictures").change(function () {
         var pictures = this.files;
 
@@ -84,7 +109,7 @@
         for (var i = 0; i < pictures.length; i++) {
             formData.append("Picture", pictures[i]);
         }
-        
+
         $.ajax({
             url: '@Url.Action("UploadPictures","Dashboard")',
             type: 'Post',
@@ -93,15 +118,21 @@
             contentType: false
         })
         .done(function (result) {
+            debugger;
             for (var i = 0; i < result.length; i++) {
                 var picture = result[i];
                     
                 var imgHTML = $("#imageTemplate").clone();
 
                 imgHTML.find("img").attr("src", "/images/site/" + picture.URL);
+                imgHTML.find("img").attr("data-id", picture.Id);
 
                 $("#picsArea").append(imgHTML.html());
             }
         });
     });
+
+    function removeMe(element) {
+        element.remove();
+    };
 </script>

@@ -37,7 +37,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 var pictureDb = new Picture();
                 pictureDb.URL = fileName;
 
-                if(DBServices.SavePicture(pictureDb))
+                if (DBServices.SavePicture(pictureDb))
                 {
                     picsList.Add(pictureDb);
                 }
