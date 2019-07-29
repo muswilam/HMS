@@ -31,5 +31,6 @@ namespace HMS.Areas.Dashboard.ViewModels
         public string PictureIds { get; set; }
 
         public IEnumerable<AccommodationType> AccommodationTypes { get; set; }
+        public IEnumerable<AccommodationPackagePicture> AccommodationPackagePictures { get; set; }
     }
 }

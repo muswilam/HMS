@@ -53,6 +53,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 model.NoOfRoom = apFromDB.NoOfRoom;
                 model.FeePerNight = apFromDB.FeePerNight;
                 model.AccommodationTypeId = apFromDB.AccommodationTypeId;
+                model.AccommodationPackagePictures = apFromDB.AccommodationPackagePictures;
             }
 
             model.AccommodationTypes = ATServices.GetAllAccommodationTypes();

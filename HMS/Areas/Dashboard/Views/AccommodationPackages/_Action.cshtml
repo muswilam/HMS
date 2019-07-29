@@ -61,6 +61,13 @@
                     <input type="hidden" id="pictureIds" name="PictureIds" value="" />
                 </div>
                 <div id="picsArea">
+                    @if (Model.AccommodationPackagePictures != null && Model.AccommodationPackagePictures.Count() > 0)
+                    {
+                        foreach (var aPP in Model.AccommodationPackagePictures)
+                        {
+                            <img src="/images/Site/@aPP.Picture.URL" width="230" class="img-thumbnail" data-id="@aPP.Picture.Id"/>
+                        }
+                    }
                 </div>
             </form>
             <div class="errorDiv"></div>
