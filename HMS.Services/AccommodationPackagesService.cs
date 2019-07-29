@@ -69,7 +69,7 @@ namespace HMS.Services
         //get accommoodation package by id
         public AccommodationPackage GetAccommodationPackageById(int id)
         {
-            return context.AccommodationPackages.Include(ap => ap.AccommodationPackagePictures.Select(app => app.Picture)).Single(ap => ap.Id == id);
+            return context.AccommodationPackages.Single(ap => ap.Id == id);
         }
 
         //add accommodation package to db 
@@ -79,10 +79,25 @@ namespace HMS.Services
             return context.SaveChanges() > 0;
         }
      
+        //delete accommodation package pic 
+        public bool DeleteAccommdationPackagePicture(int accommodationPackageId)
+        {
+            var existing = context.AccommodationPackages.Find(accommodationPackageId).AccommodationPackagePictures.ToList();
+
+            foreach (var item in existing)
+            {
+                context.Entry(item).State = EntityState.Deleted;
+            }
+
+            return context.SaveChanges() > 0;
+        }
+
         //edit accommodation package in db
         public bool UpdateAccommodationPackage(AccommodationPackage accomodationPackage)
         {
-            context.Entry(accomodationPackage).State = System.Data.Entity.EntityState.Modified;
+            // ********************************************************* BUG OF RELATIONS ***********************************************************
+            context.AccommodationPackagePictures.AddRange(accomodationPackage.AccommodationPackagePictures);
+
             return context.SaveChanges() > 0;
         }
 

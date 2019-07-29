@@ -53,7 +53,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 model.NoOfRoom = apFromDB.NoOfRoom;
                 model.FeePerNight = apFromDB.FeePerNight;
                 model.AccommodationTypeId = apFromDB.AccommodationTypeId;
-                model.AccommodationPackagePictures = apFromDB.AccommodationPackagePictures;
+                model.AccommodationPackagePictures = DBServices.GetPicturesByAccommodationPackageId(apFromDB.Id);
             }
 
             model.AccommodationTypes = ATServices.GetAllAccommodationTypes();
@@ -67,6 +67,11 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             bool result = false;
 
+            //model.pictureIds = "22,23,24" => ["22","23","24"] => [22,23,24]
+            var picsIds = !string.IsNullOrEmpty(formModel.PictureIds) ? formModel.PictureIds.Split(',').Select(int.Parse).ToList() : new List<int>();
+
+            var pictures = DBServices.GetPicturesByIds(picsIds);
+
             if (formModel.Id == 0) //create
             {
                 AccommodationPackage ap = new AccommodationPackage();
@@ -76,11 +81,6 @@ namespace HMS.Areas.Dashboard.Controllers
                 ap.FeePerNight = formModel.FeePerNight;
                 ap.AccommodationTypeId = formModel.AccommodationTypeId;
 
-                //model.pictureIds = "22,23,24" => ["22","23","24"] => [22,23,24]
-                var picsIds = formModel.PictureIds.Split(',').Select(int.Parse).ToList();
-
-                var pictures = DBServices.GetPicturesByIds(picsIds);
-
                 ap.AccommodationPackagePictures = new List<AccommodationPackagePicture>();
                 ap.AccommodationPackagePictures.AddRange(pictures.Select(p => new AccommodationPackagePicture()
                 {
@@ -89,7 +89,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
                 result = APServices.AddAccommodationPackage(ap);
             }
-            else
+            else //edit
             {
                 var ap = APServices.GetAccommodationPackageById(formModel.Id);
 
@@ -97,6 +97,15 @@ namespace HMS.Areas.Dashboard.Controllers
                 ap.NoOfRoom = formModel.NoOfRoom;
                 ap.FeePerNight = formModel.FeePerNight;
                 ap.AccommodationTypeId = formModel.AccommodationTypeId;
+
+                if(APServices.DeleteAccommdationPackagePicture(ap.Id))
+                {
+                    ap.AccommodationPackagePictures.AddRange(pictures.Select(p => new AccommodationPackagePicture()
+                    {
+                        AccommodationPackageId = ap.Id,
+                        PictureId = p.Id
+                    }));
+                }
 
                 result = APServices.UpdateAccommodationPackage(ap);
             }

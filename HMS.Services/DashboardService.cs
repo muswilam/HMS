@@ -10,25 +10,31 @@ namespace HMS.Services
 {
     public class DashboardService
     {
-        private HMSContext _context;
+        private HMSContext context;
 
         public DashboardService()
         {
-            _context = new HMSContext();
+            context = new HMSContext();
         }
 
         //save pic tto db
         public bool SavePicture(Picture picture)
         {
-            _context.Pictures.Add(picture);
+            context.Pictures.Add(picture);
 
-            return _context.SaveChanges() > 0;
+            return context.SaveChanges() > 0;
         }
 
         //get pics by ids
         public IEnumerable<Picture> GetPicturesByIds(List<int> picturesIds)
         {
-            return picturesIds.Select(p => _context.Pictures.Find(p)).ToList();
+            return picturesIds.Select(p => context.Pictures.Find(p)).ToList();
+        }
+
+        //get pictures by accommodation Package id
+        public List<AccommodationPackagePicture> GetPicturesByAccommodationPackageId(int accommodationPackageId)
+        {
+            return context.AccommodationPackages.Find(accommodationPackageId).AccommodationPackagePictures.ToList();
         }
     }
 }
