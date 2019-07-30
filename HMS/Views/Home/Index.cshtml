@@ -174,53 +174,63 @@
 
 @if (Model.AccommodationTypes != null && Model.AccommodationTypes.Count() > 0)
 {
+    var i = 0;
+
     <div id="colorlib-rooms" class="colorlib-light-grey">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
                     <span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
                     <h2>Accommodation Types</h2>
-                    <p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 animate-box">
-                    <div class="owl-carousel owl-carousel2">
+                    <p>Select Accommodation Type</p>
+                    <p>
                         @foreach (var at in Model.AccommodationTypes)
                         {
-                            <div class="item">
-                                @if (at.Id == 13)
-                                {
-                                    <a href="/images/room-1.jpg" class="room image-popup-link" style="background-image: url(/images/room-1.jpg);"></a>
-                                }
-                                else if (at.Id == 14)
-                                {
-                                    <a href="images/room-3.jpg" class="room image-popup-link" style="background-image: url(/images/room-3.jpg);"></a>
-                                }
-                                else
-                                {
-                                    <a href="images/room-3.jpg" class="room image-popup-link" style="background-image: url(/images/room-2.jpg);"></a>
-                                }
-                                <div class="desc text-center">
-                                    <h3>
-                                        <a href="@Url.Action("Index", "Accommodations", new { accommodationTypeId = @at.Id })">
-                                            @at.Name
-                                        </a>
-                                    </h3>
-                                    <br />
-                                    <p class="price">
-                                        @at.Description
-                                    </p>
-                                    @*<p><a class="btn btn-primary btn-book">Book now!</a></p>*@
-                                </div>
-                            </div>
+                            <button class="btn btn-default changeAccommodationType" data-id="@at.Id">
+                                @at.Name
+                            </button>
                         }
-                    </div>
-                </div>
-                <div class="col-md-12 text-center animate-box">
-                    <a href="#">View all rooms <i class="icon-arrow-right3"></i></a>
+                    </p>
                 </div>
             </div>
+
+            @foreach (var at in Model.AccommodationTypes)
+            {
+                <div data-id="@at.Id" class="row accommodationTypeRow" style="@( i != 0 ? "display:none" : string.Empty)">
+                    <div class="col-md-12 animate-box">
+                        <div class="owl-carousel owl-carousel2">
+
+                            @foreach (var aP in Model.AccommodationPackages.Where(ap => ap.AccommodationTypeId == at.Id))
+                            {
+                                <div class="item">
+                                    @*@foreach (var aPP in aP.AccommodationPackagePictures)
+                                        {
+                                            <a href="/images/site/@aPP.Picture.URL" class="room image-popup-link" style="background-image: url(/images/room-2.jpg);"></a>
+                                        }*@
+                                    <div class="desc text-center">
+                                        <h3>
+                                            <a href="@Url.Action("Index", "Accommodations", new { accommodationTypeId = @at.Id })">
+                                                @aP.Name
+                                            </a>
+                                        </h3>
+                                        <br />
+                                        <p class="price">
+                                            @aP.FeePerNight
+                                        </p>
+                                        @*<p><a class="btn btn-primary btn-book">Book now!</a></p>*@
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @*<div class="col-md-12 text-center animate-box">
+                        <a href="#">View all rooms <i class="icon-arrow-right3"></i></a>
+                    </div>*@
+                </div>
+
+                            i++;
+            }
+
         </div>
     </div>
 }
