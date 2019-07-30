@@ -69,7 +69,7 @@ namespace HMS.Services
         //get accommoodation package by id
         public AccommodationPackage GetAccommodationPackageById(int id)
         {
-            return context.AccommodationPackages.Single(ap => ap.Id == id);
+            return context.AccommodationPackages.Include(ap => ap.AccommodationPackagePictures.Select(aPP => aPP.Picture)).Single(ap => ap.Id == id);
         }
 
         //add accommodation package to db 

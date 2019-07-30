@@ -32,9 +32,9 @@ namespace HMS.Services
         }
 
         //get pictures by accommodation Package id
-        public List<AccommodationPackagePicture> GetPicturesByAccommodationPackageId(int accommodationPackageId)
-        {
-            return context.AccommodationPackages.Find(accommodationPackageId).AccommodationPackagePictures.ToList();
-        }
+        //public List<AccommodationPackagePicture> GetPicturesByAccommodationPackageId(int accommodationPackageId)
+        //{
+        //    return context.AccommodationPackages.Find(accommodationPackageId).AccommodationPackagePictures.ToList();
+        //}
     }
 }

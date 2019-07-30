@@ -53,7 +53,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 model.NoOfRoom = apFromDB.NoOfRoom;
                 model.FeePerNight = apFromDB.FeePerNight;
                 model.AccommodationTypeId = apFromDB.AccommodationTypeId;
-                model.AccommodationPackagePictures = DBServices.GetPicturesByAccommodationPackageId(apFromDB.Id);
+                model.AccommodationPackagePictures = apFromDB.AccommodationPackagePictures;
             }
 
             model.AccommodationTypes = ATServices.GetAllAccommodationTypes();
@@ -100,6 +100,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
                 if(APServices.DeleteAccommdationPackagePicture(ap.Id))
                 {
+                    // in edit : need aPId to edit it not make a new one 
                     ap.AccommodationPackagePictures.AddRange(pictures.Select(p => new AccommodationPackagePicture()
                     {
                         AccommodationPackageId = ap.Id,
