@@ -54,6 +54,9 @@
                     <label>Pictures</label>
                     <input id="selectPictures" type="file" class="form-control-file" name="pictures" multiple>
                 </div>
+                <div id="picsArea">
+
+                </div>
             </form>
             <div class="errorDiv"></div>
         </div>
@@ -65,12 +68,13 @@
         </div>
     </div>
 }
-
+<div id="picTemplate">
+    <img src="" style="width:230px" class="img-thumbnail"/>
+</div>
 <script>
     $("#selectPictures").change(function () {
         var pictures = this.files;
         
-        debugger
         var formData = new FormData();
         for (var i = 0; i < pictures.length; i++) {
             formData.append("Picture", pictures[i]);
@@ -83,8 +87,16 @@
             processData: false,
             contentType: false
         })
-        .done(function(result){
-            debugger;
+        .done(function (result) {
+
+            for (var i = 0; i < result.length; i++) {
+                var picture = result[i];
+
+                var imgHTML = $("#picTemplate").clone();
+                imgHTML.find("img").attr("src", "/images/site/" + picture.URL);
+
+                $("#picsArea").append(imgHTML.html());
+            }
         });
     });
 </script>
