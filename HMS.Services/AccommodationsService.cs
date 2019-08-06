@@ -105,6 +105,11 @@ namespace HMS.Services
         //delete accommodation from db 
         public bool DeleteAccommodation(Accommodation accommodation)
         {
+            if(accommodation.AccommodationPictures != null && accommodation.AccommodationPictures.Count != 0)
+            {
+                DeleteAccommodationPictures(accommodation.Id);
+            }
+
             context.Entry(accommodation).State = EntityState.Deleted;
 
             return context.SaveChanges() > 0;
