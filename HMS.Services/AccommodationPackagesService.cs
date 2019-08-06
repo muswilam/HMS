@@ -88,7 +88,7 @@ namespace HMS.Services
         }
 
         //delete accommodation package pic by accommodation package id
-        public bool DeleteAccommdationPackagePicture(int accommodationPackageId)
+        public bool DeleteAccommdationPackagePictures(int accommodationPackageId)
         {
             var existing = context.AccommodationPackages.Find(accommodationPackageId).AccommodationPackagePictures.ToList();
 
@@ -103,6 +103,10 @@ namespace HMS.Services
         //delete accommodation package by id from db
         public bool DeleteAccommodationPackage(AccommodationPackage accommodationPackage)
         {
+            if(accommodationPackage.AccommodationPackagePictures != null && accommodationPackage.AccommodationPackagePictures.Count != 0)
+            {
+                DeleteAccommdationPackagePictures(accommodationPackage.Id);
+            }
             context.Entry(accommodationPackage).State = System.Data.Entity.EntityState.Deleted;
             return context.SaveChanges() > 0;
         }

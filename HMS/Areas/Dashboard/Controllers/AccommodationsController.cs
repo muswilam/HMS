@@ -128,11 +128,9 @@ namespace HMS.Areas.Dashboard.Controllers
         // delete (post)
         public JsonResult Delete(AccommodationsActionModel formModel)
         {
-            bool result = false;
-
             var accommodation = AServices.GetAccommodationById(formModel.Id);
 
-            result = AServices.DeleteAccommodation(accommodation);
+            bool result = AServices.DeleteAccommodation(accommodation);
             
             return JsonDataResult.Result(result);
         }
