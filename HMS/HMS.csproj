@@ -209,6 +209,7 @@
     <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Areas\Dashboard\Scripts\DeleteActionScript.js" />
     <Content Include="Areas\Dashboard\Scripts\SaveActionScript.js" />
+    <Content Include="Areas\Dashboard\Scripts\SaveActionWithPictures.js" />
     <Content Include="Areas\Dashboard\Scripts\SelectPictures.js" />
     <Content Include="Areas\Dashboard\Scripts\ViewScript.js" />
     <Content Include="Content\animate.css" />

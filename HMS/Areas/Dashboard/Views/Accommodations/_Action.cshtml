@@ -2,9 +2,8 @@
 
 @if (Model != null)
 {
-    <script src="~/Areas/Dashboard/Scripts/SelectPictures.js"></script>
-    <script src="~/Areas/Dashboard/Scripts/SaveActionScript.js"></script>
-
+    <script src="~/Areas/Dashboard/Scripts/SaveActionWithPictures.js"></script>
+    
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">
@@ -54,6 +53,9 @@
                 <div class="form-group">
                     <label>Pictures</label>
                     <input id="selectPictures" type="file" class="form-control-file" name="pictures" multiple pics-href="@Url.Action("UploadPictures", "Dashboard")" />
+                    <label id="deleteMsg" style="color:darkred;display:none">
+                        Press on picture for deleting.
+                    </label>
                     <input id="pictureIds" type="hidden" name="PictureIds" value="" />
                 </div>
                 <div id="picsArea">
@@ -61,7 +63,7 @@
                     {
                         foreach (var ap in Model.AccommodationPictures)
                         {
-                            <img src="~/Images/Site/@ap.Picture.URL" style="width:230px" class="img-thumbnail" data-id="@ap.Picture.Id" />
+                            <img src="~/Images/Site/@ap.Picture.URL" style="width:230px" class="img-thumbnail" data-id="@ap.Picture.Id" onclick="removeMe(this)" />
                         }
                     }
                 </div>
@@ -78,6 +80,5 @@
     </div>
 }
 <div id="picTemplate">
-    <img src="" style="width:230px" class="img-thumbnail" data-id=""/>
+    <img src="" style="width:230px" class="del-img img-thumbnail" data-id="" onclick="removeMe(this)"/>
 </div>
-
