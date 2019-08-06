@@ -70,7 +70,7 @@ namespace HMS.Services
         //get accommdation by id
         public Accommodation GetAccommodationById(int id)
         {
-            return context.Accommodations.Single(a => a.Id == id);
+            return context.Accommodations.Include(a => a.AccommodationPictures.Select(ap => ap.Picture)).Single(a => a.Id == id);
         }
 
         //add accommodation to db 

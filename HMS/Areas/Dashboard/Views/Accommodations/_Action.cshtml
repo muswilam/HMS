@@ -56,11 +56,18 @@
                     <input id="pictureIds" type="hidden" name="PictureIds" value="" />
                 </div>
                 <div id="picsArea">
-
+                    @if (Model.AccommodationPictures != null && Model.AccommodationPictures.Count() != 0)
+                    {
+                        foreach (var ap in Model.AccommodationPictures)
+                        {
+                            <img src="~/Images/Site/@ap.Picture.URL" style="width:230px" class="img-thumbnail" data-id="@ap.Picture.Id" />
+                        }
+                    }
                 </div>
             </form>
             <div class="errorDiv"></div>
         </div>
+
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
             <button data-href="@Url.Action("Action","Accommodations")" id="saveActionBtn" type="button" class="btn btn-primary">
