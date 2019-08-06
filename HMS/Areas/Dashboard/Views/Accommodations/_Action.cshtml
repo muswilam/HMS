@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    <script src="~/Areas/Dashboard/Scripts/SaveActionScript.js"></script>
+    @*<script src="~/Areas/Dashboard/Scripts/SaveActionScript.js"></script>*@
 
     <div class="modal-content">
         <div class="modal-header">
@@ -23,7 +23,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form id="actionForm">
+            <form id="actionForm" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="@Model.Id" />
                 <div class="form-group">
                     <label>Name</label>
@@ -52,7 +52,8 @@
                 </div>
                 <div class="form-group">
                     <label>Pictures</label>
-                    <input id="selectPictures" type="file" class="form-control-file" name="pictures" multiple>
+                    <input id="selectPictures" type="file" class="form-control-file" name="pictures" multiple />
+                    <input id="pictureIds" type="hidden" name="PictureIds" value="" />
                 </div>
                 <div id="picsArea">
 
@@ -69,9 +70,35 @@
     </div>
 }
 <div id="picTemplate">
-    <img src="" style="width:230px" class="img-thumbnail"/>
+    <img src="" style="width:230px" class="img-thumbnail" data-id=""/>
 </div>
 <script>
+    $("#saveActionBtn").click(function () {
+        var pictureIds = [];
+
+        $("#picsArea img").each(function () {
+            var picId = $(this).attr("data-id");
+            pictureIds.push(picId);
+        });
+
+        $("#pictureIds").val(pictureIds.join());
+
+        debugger;
+        $.ajax({
+            url: $(this).attr("data-href"),
+            type: 'Post',
+            data: $("#actionForm").serialize()
+        })
+        .done(function (result) {
+            if (result.success) {
+                location.reload();
+            } else {
+                $(".errorDiv").html(result.message);
+            }
+        });
+    });
+
+
     $("#selectPictures").change(function () {
         var pictures = this.files;
         
@@ -94,6 +121,7 @@
 
                 var imgHTML = $("#picTemplate").clone();
                 imgHTML.find("img").attr("src", "/images/site/" + picture.URL);
+                imgHTML.find("img").attr("data-id", picture.Id);
 
                 $("#picsArea").append(imgHTML.html());
             }

@@ -15,6 +15,7 @@ namespace HMS.Areas.Dashboard.Controllers
     {
         AccommodationsService AServices = new AccommodationsService();
         AccommodationPackagesService APServices = new AccommodationPackagesService();
+        DashboardService DBServices = new DashboardService();
 
         // GET: Dashboard/Accommodations
         public ActionResult Index(string searchTerm, int? accommodationPackageId, int? page)
@@ -72,6 +73,16 @@ namespace HMS.Areas.Dashboard.Controllers
                 accommodation.Name = formModel.Name;
                 accommodation.Description = formModel.Description;
                 accommodation.AccommodationPackageId = formModel.AccommodationPackageId;
+
+                var picsIds = string.IsNullOrEmpty(formModel.PictureIds) ?  new List<int>() : formModel.PictureIds.Split(',').Select(int.Parse).ToList();
+
+                var pictures = DBServices.GetPicturesByIds(picsIds);
+
+                accommodation.AccommodationPictures = new List<AccommodationPicture>();
+                accommodation.AccommodationPictures.AddRange(pictures.Select(p => new AccommodationPicture()
+                {
+                    PictureId = p.Id
+                }));
 
                 result = AServices.SaveAccommodation(accommodation);
             }
