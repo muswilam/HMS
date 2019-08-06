@@ -66,6 +66,10 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             bool result = false;
 
+            var picsIds = string.IsNullOrEmpty(formModel.PictureIds) ? new List<int>() : formModel.PictureIds.Split(',').Select(int.Parse).ToList();
+
+            var pictures = DBServices.GetPicturesByIds(picsIds);
+
             if(formModel.Id == 0) //create
             {
                 //make instance of accommodation then fill it with the new data
@@ -74,11 +78,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 accommodation.Name = formModel.Name;
                 accommodation.Description = formModel.Description;
                 accommodation.AccommodationPackageId = formModel.AccommodationPackageId;
-
-                var picsIds = string.IsNullOrEmpty(formModel.PictureIds) ?  new List<int>() : formModel.PictureIds.Split(',').Select(int.Parse).ToList();
-
-                var pictures = DBServices.GetPicturesByIds(picsIds);
-
+               
                 accommodation.AccommodationPictures = new List<AccommodationPicture>();
                 accommodation.AccommodationPictures.AddRange(pictures.Select(p => new AccommodationPicture()
                 {
@@ -95,6 +95,16 @@ namespace HMS.Areas.Dashboard.Controllers
                 accommodation.Name = formModel.Name;
                 accommodation.Description = formModel.Description;
                 accommodation.AccommodationPackageId = formModel.AccommodationPackageId;
+
+                //delete existing accommodation pics to add new one after editing
+                if(AServices.DeleteAccommodationPictures(accommodation.Id))
+                {
+                    accommodation.AccommodationPictures.AddRange(pictures.Select(p => new AccommodationPicture() 
+                    {
+                        PictureId = p.Id,
+                        AccommodationId = accommodation.Id
+                    }));
+                }
 
                 result = AServices.UpdateAccommodation(accommodation);
             }

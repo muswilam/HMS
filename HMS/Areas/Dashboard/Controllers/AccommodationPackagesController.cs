@@ -98,6 +98,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 ap.FeePerNight = formModel.FeePerNight;
                 ap.AccommodationTypeId = formModel.AccommodationTypeId;
 
+                //delete existing accommodation pics to add new one after editing
                 if(APServices.DeleteAccommdationPackagePicture(ap.Id))
                 {
                     // in edit : need aPId to edit it not make a new one 

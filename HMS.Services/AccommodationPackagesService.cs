@@ -78,8 +78,16 @@ namespace HMS.Services
             context.AccommodationPackages.Add(accommodationPackage);
             return context.SaveChanges() > 0;
         }
-     
-        //delete accommodation package pic 
+
+        //edit accommodation package in db
+        public bool UpdateAccommodationPackage(AccommodationPackage accomodationPackage)
+        {
+            context.Entry(accomodationPackage).State = EntityState.Modified;
+
+            return context.SaveChanges() > 0;
+        }
+
+        //delete accommodation package pic by accommodation package id
         public bool DeleteAccommdationPackagePicture(int accommodationPackageId)
         {
             var existing = context.AccommodationPackages.Find(accommodationPackageId).AccommodationPackagePictures.ToList();
@@ -88,15 +96,6 @@ namespace HMS.Services
             {
                 context.Entry(item).State = EntityState.Deleted;
             }
-
-            return context.SaveChanges() > 0;
-        }
-
-        //edit accommodation package in db
-        public bool UpdateAccommodationPackage(AccommodationPackage accomodationPackage)
-        {
-            // ********************************************************* BUG OF RELATIONS ***********************************************************
-            context.AccommodationPackagePictures.AddRange(accomodationPackage.AccommodationPackagePictures);
 
             return context.SaveChanges() > 0;
         }
