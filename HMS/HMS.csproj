@@ -210,7 +210,6 @@
     <Content Include="Areas\Dashboard\Scripts\DeleteActionScript.js" />
     <Content Include="Areas\Dashboard\Scripts\SaveActionScript.js" />
     <Content Include="Areas\Dashboard\Scripts\SaveActionWithPictures.js" />
-    <Content Include="Areas\Dashboard\Scripts\SelectPictures.js" />
     <Content Include="Areas\Dashboard\Scripts\ViewScript.js" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
@@ -274,6 +273,7 @@
     <Content Include="Images\blog-2.jpg" />
     <Content Include="Images\blog-3.jpg" />
     <Content Include="Images\cover_img_1.jpg" />
+    <Content Include="Images\Site\default-image.jpg" />
     <Content Include="Images\img_bg_1.jpg" />
     <Content Include="Images\img_bg_2.jpg" />
     <Content Include="Images\img_bg_3.jpg" />
@@ -348,7 +348,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
-    <Folder Include="Images\Site\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -450,6 +449,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\.DS_Store" />
     <Content Include="Views\Accommodations\Index.cshtml" />
+    <Content Include="Views\Accommodations\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HMS.Data\HMS.Data.csproj">

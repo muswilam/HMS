@@ -20,7 +20,7 @@ namespace HMS.Services
         //get list of accommdation packages 
         public IEnumerable<AccommodationPackage> GetAllAccommodationPackages()
         {
-            return context.AccommodationPackages.ToList();
+            return context.AccommodationPackages.Include(ap => ap.AccommodationPackagePictures.Select(aPP => aPP.Picture)).ToList();
         }
 
         //get accommodation packages by accommodation type 
@@ -69,7 +69,10 @@ namespace HMS.Services
         //get accommoodation package by id
         public AccommodationPackage GetAccommodationPackageById(int id)
         {
-            return context.AccommodationPackages.Include(ap => ap.AccommodationPackagePictures.Select(aPP => aPP.Picture)).Single(ap => ap.Id == id);
+            return context.AccommodationPackages
+                .Include(aP => aP.AccommodationType)
+                .Include(ap => ap.AccommodationPackagePictures.Select(aPP => aPP.Picture))
+                .Single(ap => ap.Id == id);
         }
 
         //add accommodation package to db 

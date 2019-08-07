@@ -19,6 +19,14 @@ namespace HMS
                 defaults: new { area ="", controller = "Accommodations", action = "Index"},
                 namespaces: new[] {"HMS.Controllers"}  // need namespace to compare between area/dashboaed/controllers and controllers
             );
+
+            routes.MapRoute(
+               name: "AccommodationPackageDetails",
+               url: "accommodation-package/{accommodationPackageId}",
+               defaults: new { area = "", controller = "Accommodations", action = "Details" },
+               namespaces: new[] { "HMS.Controllers" } 
+           );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

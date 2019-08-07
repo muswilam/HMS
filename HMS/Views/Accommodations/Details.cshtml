@@ -1,0 +1,68 @@
+﻿@model HMS.ViewModels.AccommodationPackageDetailsViewModel
+
+@using HMS.Entities;
+
+@if (Model != null && Model.AccommodationPackage != null)
+{
+
+    var thumbnailPicture = Model.AccommodationPackage.AccommodationPackagePictures != null && Model.AccommodationPackage.AccommodationPackagePictures.Count > 0 ? Model.AccommodationPackage.AccommodationPackagePictures.First() : new AccommodationPackagePicture();
+
+    var thumbnailURL = thumbnailPicture.Picture != null ? thumbnailPicture.Picture.URL : "default-image.jpg";
+
+    <aside id="colorlib-hero">
+        <div class="flexslider">
+            <ul class="slides">
+                <li style="background-image: url(/images/Site/@thumbnailURL);">
+                    <div class="overlay"></div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                                <div class="slider-text-inner slider-text-inner2 text-center">
+                                    <h2>
+                                        @Model.AccommodationPackage.AccommodationType.Name
+                                    </h2>
+                                    <h1>@Model.AccommodationPackage.Name</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+
+    <div id="colorlib-amenities">
+        <div class="container">
+            <div class="row">
+                <div class="amenities-flex">
+                    <div class="desc animate-box">
+                        <p class="price">
+                            <span class="currency">$</span>
+                            <span class="price-room">@Model.AccommodationPackage.FeePerNight</span>
+                            <span class="per">/ per night</span>
+                        </p>
+                        <p class="price">
+                            <span class="free">@Model.AccommodationPackage.NoOfRoom rooms are available</span>
+                        </p>
+
+                        <p>
+                            This accommodation package is from type @Model.AccommodationPackage.AccommodationType.Name
+                            with many features like :
+                            @Model.AccommodationPackage.AccommodationType.Description
+                        </p>
+                    </div>
+
+                    @if (Model.AccommodationPackage.AccommodationPackagePictures != null && Model.AccommodationPackage.AccommodationPackagePictures.Count > 0)
+                    {
+                        foreach (var aPP in Model.AccommodationPackage.AccommodationPackagePictures)
+                        {
+                            var imageUrl = aPP.Picture != null ? aPP.Picture.URL : "default-image.jpg";
+                            <div class="amenities-img animate-box" style="height:400px; background-image: url(/images/Site/@imageUrl);"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
