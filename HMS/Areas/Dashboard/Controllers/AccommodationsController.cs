@@ -26,7 +26,7 @@ namespace HMS.Areas.Dashboard.Controllers
             var pageSize = 10;
             var totalRecords = AServices.GetAllAccommodationsCount(searchTerm, accommodationPackageId);
 
-            model.Accommodations = AServices.GetAccommodationsBySearchOrPackageId(searchTerm , accommodationPackageId, page.Value ,pageSize);
+            model.Accommodations = AServices.GetAccommodationsBySearchOrPackageId(searchTerm, accommodationPackageId, page.Value, pageSize);
 
             model.SearchByName = searchTerm;
             model.SearchByAccommodationPackageId = accommodationPackageId;
@@ -43,7 +43,7 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             AccommodationsActionModel model = new AccommodationsActionModel();
 
-            if(id > 0) // edit
+            if (id > 0) // edit
             {
                 var accommodation = AServices.GetAccommodationById(id.Value);
 
@@ -57,7 +57,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
             model.AccommodationPackages = APServices.GetAllAccommodationPackages();
 
-            return PartialView("_Action",model);
+            return PartialView("_Action", model);
         }
 
         // create and edit (post) 
@@ -70,7 +70,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
             var pictures = DBServices.GetPicturesByIds(picsIds);
 
-            if(formModel.Id == 0) //create
+            if (formModel.Id == 0) //create
             {
                 //make instance of accommodation then fill it with the new data
                 Accommodation accommodation = new Accommodation();
@@ -78,7 +78,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 accommodation.Name = formModel.Name;
                 accommodation.Description = formModel.Description;
                 accommodation.AccommodationPackageId = formModel.AccommodationPackageId;
-               
+
                 accommodation.AccommodationPictures = new List<AccommodationPicture>();
                 accommodation.AccommodationPictures.AddRange(pictures.Select(p => new AccommodationPicture()
                 {
@@ -97,18 +97,16 @@ namespace HMS.Areas.Dashboard.Controllers
                 accommodation.AccommodationPackageId = formModel.AccommodationPackageId;
 
                 //delete existing accommodation pics to add new one after editing
-                if(AServices.DeleteAccommodationPictures(accommodation.Id))
-                {
-                    accommodation.AccommodationPictures.AddRange(pictures.Select(p => new AccommodationPicture() 
-                    {
-                        PictureId = p.Id,
-                        AccommodationId = accommodation.Id
-                    }));
-                }
+                AServices.DeleteAccommodationPictures(accommodation.Id);
+
+                accommodation.AccommodationPictures.AddRange(pictures.Select(p => new AccommodationPicture() 
+                { 
+                    PictureId = p.Id, AccommodationId = accommodation.Id
+                }));
 
                 result = AServices.UpdateAccommodation(accommodation);
             }
-            return JsonDataResult.Result(result); 
+            return JsonDataResult.Result(result);
         }
 
         // delete (get)
@@ -122,7 +120,7 @@ namespace HMS.Areas.Dashboard.Controllers
             model.Id = accommodation.Id;
             model.Name = accommodation.Name;
 
-            return PartialView("_Delete",model);
+            return PartialView("_Delete", model);
         }
 
         // delete (post)
@@ -131,7 +129,7 @@ namespace HMS.Areas.Dashboard.Controllers
             var accommodation = AServices.GetAccommodationById(formModel.Id);
 
             bool result = AServices.DeleteAccommodation(accommodation);
-            
+
             return JsonDataResult.Result(result);
         }
     }

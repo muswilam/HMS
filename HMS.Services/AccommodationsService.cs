@@ -90,7 +90,7 @@ namespace HMS.Services
         }
 
         //delete accommodation pictures by accommodation id 
-        public bool DeleteAccommodationPictures(int acccommodationId)
+        public void DeleteAccommodationPictures(int acccommodationId)
         {
             var existing = context.Accommodations.Find(acccommodationId).AccommodationPictures.ToList();
 
@@ -99,7 +99,7 @@ namespace HMS.Services
                 context.Entry(e).State = EntityState.Deleted;
             }
 
-            return context.SaveChanges() > 0; 
+            context.SaveChanges();
         }
 
         //delete accommodation from db 
