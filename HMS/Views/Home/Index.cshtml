@@ -200,7 +200,7 @@
             {
                 <div data-id="@at.Id" class="row accommodationTypeRow" style="@( i != 0 ? "display:none" : string.Empty)">
                     <div class="col-md-12 animate-box">
-                        <div class="owl-carousel owl-carousel2">
+                        <div class="owl-carousel owl-carousel2" style="width:1060px">
 
                             @foreach (var aP in Model.AccommodationPackages.Where(ap => ap.AccommodationTypeId == at.Id))
                             {
@@ -218,10 +218,6 @@
                                                 @aP.Name
                                             </a>
                                         </h3>
-                                        <br />
-                                        <p class="price">
-                                            @aP.FeePerNight
-                                        </p>
                                         @*<p><a class="btn btn-primary btn-book">Book now!</a></p>*@
                                     </div>
                                 </div>
