@@ -16,16 +16,23 @@ namespace HMS
             routes.MapRoute(
                 name: "FEAccommodations",
                 url: "Accommodations",
-                defaults: new { area ="", controller = "Accommodations", action = "Index"},
-                namespaces: new[] {"HMS.Controllers"}  // need namespace to compare between area/dashboaed/controllers and controllers
+                defaults: new { area = "", controller = "Accommodations", action = "Index" },
+                namespaces: new[] { "HMS.Controllers" }  // need namespace to compare between area/dashboaed/controllers and controllers
             );
 
             routes.MapRoute(
                name: "AccommodationPackageDetails",
                url: "accommodation-package/{accommodationPackageId}",
                defaults: new { area = "", controller = "Accommodations", action = "Details" },
-               namespaces: new[] { "HMS.Controllers" } 
-           );
+               namespaces: new[] { "HMS.Controllers" }
+            );
+
+            routes.MapRoute(
+               name: "CheckAvailability",
+               url: "accommodation-check-availability",
+               defaults: new { area = "", controller = "Accommodations", action = "CheckAvailability" },
+               namespaces: new[] { "HMS.Controllers" }
+            );
 
             routes.MapRoute(
                 name: "Default",

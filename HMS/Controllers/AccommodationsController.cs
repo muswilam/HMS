@@ -36,5 +36,11 @@ namespace HMS.Controllers
 
             return View(model);
         }
+
+        public ActionResult CheckAvailability(CheckAccommodationAvailabilityViewModel checkFormModel)
+        {
+
+            return View();
+        }
     }
 }

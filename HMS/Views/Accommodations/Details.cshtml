@@ -66,3 +66,88 @@
         </div>
     </div>
 }
+
+<div id="colorlib-contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 animate-box">
+                <h3>Booking</h3>
+                <form  id="confirmBookingForm">
+
+                    <input type="hidden" name="AccommodationPackageId" value="@Model.AccommodationPackage.Id" />
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label for="fromDate">Check in date</label>
+                            <input type="text" name="FromDate" id="fromDate" class="form-control" placeholder="Check in date" autocomplete="off">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="duration">Duration of stay nights</label>
+                            <select id="duration" name="Duration" class="form-control">
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label for="noOfAdults">No of adults</label>
+                            <input type="number" name="NoOfAdults" id="noOfAdults" class="form-control" value="1" min="1" max="10" autocomplete="off">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="noOfChildren">No of children</label>
+                            <input type="number" name="noOfChildren" id="NoOfChildren" class="form-control" value="0" min="0" max="10" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label for="name">Guest Name</label>
+                            <input type="text" id="name" name="Name" class="form-control" placeholder="Your name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="Email" class="form-control" placeholder="Your email address">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <label for="note">Add special note</label>
+                            <textarea name="Note" id="note" cols="30" rows="10" class="form-control" placeholder="Add special note"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input type="button" id="checkAvailability" value="Check availability" data-href="@Url.Action("CheckAvailability","Accommodations")"  class="btn btn-primary">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <script>
+     $('#fromDate').datepicker({
+         format: 'mm/dd/yyyy',
+         startDate: '+3d'
+     });
+
+     $("#checkAvailability").click(function () {
+         var linkUrl = $(this).attr("data-href");
+         $.ajax({
+             url: linkUrl,
+             type: 'Post',
+             data: $("#confirmBookingForm").serialize()
+         })
+         debugger;
+     })
+
+</script>
+
+
